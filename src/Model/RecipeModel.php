@@ -16,23 +16,33 @@ class RecipeModel
 
     public function getAll()
     {
-        $request = "SELECT * FROM Recette";
+        $request = "SELECT * FROM Recipe";
         $stmt = $this->pdo->query($request);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getByRegime($regime)
+    public function getByParams($params)
     {
-        $request = "SELECT * FROM Recette WHERE regime = :regime";
+        $request = "SELECT * FROM recipe WHERE ";
+        $firstLoop = false;
+        foreach($params as $param => $value){
+            if($firstLoop == true){
+                $request = $request." AND ";
+            }
+            $request = $request.$param." = :".$param;
+            $firstLoop = true;
+        }
         $stmt = $this->pdo->prepare($request);
-        $stmt -> bindParam(":regime", $regime, PDO::PARAM_STR);
+        foreach($params as $param => $value){
+            $stmt -> bindParam(":".$param, $value, PDO::PARAM_STR);
+        }
         return $stmt->execute();
     }
 
     public function insertRecipe($data)
     {
-        $request = "INSERT INTO Recette (titre, description, photo) VALUES (?,?,?)";
+        $request = "INSERT INTO Recipe (title, description, photo) VALUES (?,?,?)";
         $stmt = $this->pdo->prepare($request);
-        return $stmt->execute([$data->titre, $data->description, $data->photo]);
+        return $stmt->execute([$data->title, $data->description, $data->photo]);
     }
 }

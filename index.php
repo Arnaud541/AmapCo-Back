@@ -17,7 +17,8 @@ if (isset($_GET["action"])) {
         case 'recipe':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new RecipeController)->Get();
+                    $data = json_decode(file_get_contents("php://input"));
+                    (new RecipeController)->get($data);
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -28,7 +29,7 @@ if (isset($_GET["action"])) {
         case 'user':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new UserController)->Get();
+                    (new UserController)->get();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -39,7 +40,7 @@ if (isset($_GET["action"])) {
         case 'grower':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new GrowerController)->Get();
+                    (new GrowerController)->get();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -61,7 +62,7 @@ if (isset($_GET["action"])) {
         case 'subscriptioncart':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new SubscriptionCartController)->Get();
+                    (new SubscriptionCartController)->get();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -72,7 +73,7 @@ if (isset($_GET["action"])) {
         case 'comments':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new CommentsController)->Get();
+                    (new CommentsController)->get();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -83,7 +84,7 @@ if (isset($_GET["action"])) {
         case 'responsecomments':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new ResponseCommentsController)->Get();
+                    (new ResponseCommentsController)->get();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -94,7 +95,7 @@ if (isset($_GET["action"])) {
         case 'growernote':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new GrowerNoteController)->Get();
+                    (new GrowerNoteController)->get();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -105,7 +106,7 @@ if (isset($_GET["action"])) {
         case 'recipenote':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new RecipeNoteController)->Get();
+                    (new RecipeNoteController)->get();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -116,7 +117,7 @@ if (isset($_GET["action"])) {
         case 'product':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new ProductController)->Get();
+                    (new ProductController)->get();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -127,7 +128,7 @@ if (isset($_GET["action"])) {
         case 'ingredient':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new IngredientController)->Get();
+                    (new IngredientController)->get();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -138,7 +139,7 @@ if (isset($_GET["action"])) {
         case 'steps':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new StepsController)->Get();
+                    (new StepsController)->get();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -149,7 +150,7 @@ if (isset($_GET["action"])) {
         case 'ustensils':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new UstensilsController)->Get();
+                    (new UstensilsController)->get();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));

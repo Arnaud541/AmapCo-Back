@@ -9,21 +9,20 @@ use AMAP\Model\RecipeModel;
 
 class RecipeController
 {
-    public function Get()
+    /**
+     * sorted : true/false;
+     * params{
+     *      diet : "vegetarien",
+     *      ingredients : "steak",
+     *      ...
+     * }
+     */
+    public function get($data)
     {
-        if (isset($_GET['sort'])) {
-            switch ($_GET['sort']) {
-                case "regime":
-                    $recipes = (new RecipeModel)->getByRegime($_GET['param']);
-                    $response = ['status' => 200, 'recettes' => $recipes];
-                    echo json_encode($response);
-                    break;
-                case "difficulty"
-                    $recipes = (new RecipeModel)->getByDifficulty($_GET['param']);
-                    $response = ['status' => 200, 'recettes' => $recipes];
-                    echo json_encode($response);
-                    break;
-            }
+        if ($data['sorted'] == true) {
+            $recipes = (new RecipeModel)->getByParams($data['params']);
+            $response = ['status' => 200, 'recettes' => $recipes];
+            echo json_encode($response);
         } else {
             $recipes = (new RecipeModel)->getAll();
             $response = ['status' => 200, 'recettes' => $recipes];
