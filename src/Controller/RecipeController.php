@@ -9,16 +9,30 @@ use AMAP\Model\RecipeModel;
 
 class RecipeController
 {
-    public function getAll()
+    public function Get()
     {
-        $recipes = (new RecipeModel)->getAll();
-        $response = ['status' => 200, 'recettes' => $recipes];
-        echo json_encode($response);
+        if (isset($_GET['sort'])) {
+            switch ($_GET['sort']) {
+                case "regime":
+                    $recipes = (new RecipeModel)->getByRegime($_GET['param']);
+                    $response = ['status' => 200, 'recettes' => $recipes];
+                    echo json_encode($response);
+                    break;
+                case "difficulty"
+                    $recipes = (new RecipeModel)->getByDifficulty($_GET['param']);
+                    $response = ['status' => 200, 'recettes' => $recipes];
+                    echo json_encode($response);
+                    break;
+            }
+        } else {
+            $recipes = (new RecipeModel)->getAll();
+            $response = ['status' => 200, 'recettes' => $recipes];
+            echo json_encode($response);
+        }
     }
 
     public function insertRecipe($data)
     {
-
         if ((new RecipeModel)->insertRecipe($data)) {
             $response = ['status' => 200, 'message' => "La recette à bien été enregistrée"];
         } else {
