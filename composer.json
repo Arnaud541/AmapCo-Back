@@ -2,7 +2,7 @@
     "name": "arnaud/amap-co-back",
     "autoload": {
         "psr-4": {
-            "AmapCoBack\\": "src/"
+            "AMAP\\": "src/"
         }
     },
     "authors": [
