@@ -17,17 +17,11 @@ class RecipeController
      *      ...
      * }
      */
-    public function get($data)
+    public function get()
     {
-        if ($data['sorted'] == true) {
-            $recipes = (new RecipeModel)->getByParams($data['params']);
-            $response = ['status' => 200, 'recettes' => $recipes];
-            echo json_encode($response);
-        } else {
-            $recipes = (new RecipeModel)->getAll();
-            $response = ['status' => 200, 'recettes' => $recipes];
-            echo json_encode($response);
-        }
+        $recipes = (new RecipeModel)->getAll();
+        $response = ['status' => 200, 'recettes' => $recipes];
+        echo json_encode($response);
     }
 
     public function insertRecipe($data)

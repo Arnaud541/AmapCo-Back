@@ -17,8 +17,7 @@ if (isset($_GET["action"])) {
         case 'recipe':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    $data = json_decode(file_get_contents("php://input"));
-                    (new RecipeController)->get($data);
+                    (new RecipeController)->get();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
