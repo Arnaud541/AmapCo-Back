@@ -1,0 +1,15 @@
+{
+    "name": "arnaud/amap-co-back",
+    "autoload": {
+        "psr-4": {
+            "AmapCoBack\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Arnaud B",
+            "email": "arnaud.bourgoin@outlook.com"
+        }
+    ],
+    "require": {}
+}
