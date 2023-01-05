@@ -16,6 +16,15 @@ class IngredientModel
 
     public function getAll()
     {
+
+        $sql = "SELECT * FROM Ingredient";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAll2()
+    {
         $params = [];
         if (isset($_GET['params'])) {
             foreach ($_GET['params'] as $param => $value) {
