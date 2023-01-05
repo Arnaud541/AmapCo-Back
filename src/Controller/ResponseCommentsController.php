@@ -7,18 +7,18 @@ require 'vendor/autoload.php';
 
 use AMAP\Model\ResponseModel;
 
-class ResponseController
+class ResponseCommentsController
 {
     public function get()
     {
-        $data = (new ResponseModel)->getAll();
+        $data = (new ResponseCommentsModel)->getAll();
         $response = ['status' => 200, 'commentaires' => $data];
         echo json_encode($response);
     }
 
     public function insert($data)
     {
-        if ((new ResponseModel)->insert($data)) {
+        if ((new ResponseCommentsModel)->insert($data)) {
             $response = ['status' => 200, 'message' => "Le commentaire a bien été enregistrée"];
         } 
         else {
