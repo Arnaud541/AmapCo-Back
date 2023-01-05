@@ -19,7 +19,7 @@ class RecipeController
     public function insert($data)
     {
         if ((new RecipeModel)->insert($data)) {
-            $response = ['status' => 200, 'message' => "La recette a bien été enregistrée"];
+            $response = ['status' => 200, 'message' => "Arnaud je te chies dessus compris"];
         } 
         else {
             $response = ['status' => 400, 'message' => "L'enregistrement de la recette a échoué"];
