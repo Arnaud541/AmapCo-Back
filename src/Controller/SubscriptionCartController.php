@@ -7,7 +7,7 @@ require 'vendor/autoload.php';
 
 use AMAP\Model\SubscriptionCartModel;
 
-class SubsciptionCartController
+class SubscriptionCartController
 {
     public function get()
     {
