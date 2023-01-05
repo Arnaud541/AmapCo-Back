@@ -43,8 +43,15 @@ class GrowerModel
 
     public function insert($data)
     {
-        $request = "INSERT INTO Recipe (title, description, photo) VALUES (?,?,?)";
+        $request = "INSERT INTO Producteur (email, nom, prenom, avatar, region, adresse, codePostal) VALUES (:email,:nom,:prenom,:avatar,:region,:adresse,:codePostal)";
         $stmt = $this->pdo->prepare($request);
-        return $stmt->execute([$data->title, $data->description, $data->photo]);
+        $stmt->bindParam(':email', $data->email, PDO::PARAM_STR);
+        $stmt->bindParam(':nom', $data->nom, PDO::PARAM_STR);
+        $stmt->bindParam(":prenom" , $data->prenom, PDO::PARAM_STR);
+        $stmt->bindParam(":avatar" , $data->avatar, PDO::PARAM_STR);
+        $stmt->bindParam(":region" , $data->region, PDO::PARAM_STR);
+        $stmt->bindParam(":adresse" , $data->adresse, PDO::PARAM_STR);
+        $stmt->bindParam(":codePostal" , $data->codePostal, PDO::PARAM_STR);
+        return $stmt->execute([$data->email, $data->nom, $data->prenom, $data->avatar,$data->region,$data->adresse,$data->codePostal]);
     }
 }

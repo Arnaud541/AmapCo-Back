@@ -43,8 +43,10 @@ class ProductModel
 
     public function insert($data)
     {
-        $request = "INSERT INTO Recipe (title, description, photo) VALUES (?,?,?)";
+        $request = "INSERT INTO Produit (id_ingredient, quantite) VALUES (:id_utilisateur,:quantite)";
         $stmt = $this->pdo->prepare($request);
-        return $stmt->execute([$data->title, $data->description, $data->photo]);
+        $stmt->bindParam(':id_ingredient', $data->id_ingredient, PDO::PARAM_INT);
+        $stmt->bindParam(':quantite', $data->quantite, PDO::PARAM_STR);
+        return $stmt->execute([$data->id_ingredient, $data->quantite]);
     }
 }

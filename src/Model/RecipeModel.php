@@ -43,8 +43,17 @@ class RecipeModel
 
     public function insert($data)
     {
-        $request = "INSERT INTO Recipe (title, description, photo) VALUES (?,?,?)";
+        $request = "INSERT INTO Recette (id_utilisateur ,titre,description,photo,dureeRealisation,saison,difficulte,typePlat,regimeAlimentaire) VALUES (:id_utilisateur ,:titre,:description,:photo,:dureeRealisation,:saison,:difficulte,:typePlat,:regimeAlimentaire)";
         $stmt = $this->pdo->prepare($request);
-        return $stmt->execute([$data->title, $data->description, $data->photo]);
+        $stmt->bindParam(':id_utilisateur ', $data->id_utilisateur , PDO::PARAM_INT);
+        $stmt->bindParam(':titre', $data->titre, PDO::PARAM_STR);
+        $stmt->bindParam(":description" , $data->description, PDO::PARAM_STR);
+        $stmt->bindParam(":photo" , $data->photo, PDO::PARAM_STR);
+        $stmt->bindParam(":dureeRealisation" , $data->dureeRealisation, PDO::PARAM_INT);
+        $stmt->bindParam(":saison" , $data->saison, PDO::PARAM_STR);
+        $stmt->bindParam(":difficulte" , $data->difficulte, PDO::PARAM_STR);
+        $stmt->bindParam(":typePlat" , $data->typePlat, PDO::PARAM_STR);
+        $stmt->bindParam(":regimeAlimentaire" , $data->regimeAlimentaire, PDO::PARAM_STR);
+        return $stmt->execute([$data->id_utilisateur , $data->titre, $data->description,$data->photo,$data->dureeRealisation,$data->saison,$data->difficulte,$data->typePlat,$data->regimeAlimentaire]);
     }
 }

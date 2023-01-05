@@ -43,8 +43,14 @@ class ProducerCartModel
 
     public function insert($data)
     {
-        $request = "INSERT INTO Recipe (title, description, photo) VALUES (?,?,?)";
+        $request = "INSERT INTO PanierProducteur (id_produit,id_producteur,nom,img_url,prix,type) VALUES (:id_produit,:id_producteur,:nom,:img_url,:prix,:type)";
         $stmt = $this->pdo->prepare($request);
-        return $stmt->execute([$data->title, $data->description, $data->photo]);
+        $stmt->bindParam(':id_produit', $data->id_produit, PDO::PARAM_INT);
+        $stmt->bindParam(':id_producteur', $data->id_producteur, PDO::PARAM_INT);
+        $stmt->bindParam(":nom" , $data->nom, PDO::PARAM_STR);
+        $stmt->bindParam(":img_url" , $data->img_url, PDO::PARAM_STR);
+        $stmt->bindParam(":prix" , $data->prix, PDO::PARAM_STR);
+        $stmt->bindParam(":type" , $data->type, PDO::PARAM_STR);
+        return $stmt->execute([$data->id_produit, $data->id_producteur, $data->nom,$data->img_url,$data->prix,$data->type]);
     }
 }

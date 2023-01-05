@@ -43,8 +43,11 @@ class GrowerNoteModel
 
     public function insert($data)
     {
-        $request = "INSERT INTO Recipe (title, description, photo) VALUES (?,?,?)";
+        $request = "INSERT INTO NoteProducteur (id_utilisateur, note, avis) VALUES (:id_utilisateur,:note,:avis)";
         $stmt = $this->pdo->prepare($request);
-        return $stmt->execute([$data->title, $data->description, $data->photo]);
+        $stmt->bindParam(':id_utilisateur', $data->id_utilisateur, PDO::PARAM_INT);
+        $stmt->bindParam(':note', $data->note, PDO::PARAM_STR);
+        $stmt->bindParam(":avis" , $data->avis, PDO::PARAM_STR);
+        return $stmt->execute([$data->id_utilisateur, $data->note, $data->avis]);
     }
 }
