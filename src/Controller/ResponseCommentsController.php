@@ -5,7 +5,7 @@ namespace AMAP\Controller;
 
 require 'vendor/autoload.php';
 
-use AMAP\Model\ResponseModel;
+use AMAP\Model\ResponseCommentsModel;
 
 class ResponseCommentsController
 {
