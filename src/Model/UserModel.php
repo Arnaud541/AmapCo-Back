@@ -43,8 +43,14 @@ class UserModel
 
     public function insert($data)
     {
-        $request = "INSERT INTO Recipe (title, description, photo) VALUES (?,?,?)";
+        $request = "INSERT INTO Utilisateur (email, nom, prenom, avatar, regimeAlimentaire, password) VALUES (:email, :nom, :prenom, :avatar, :regimeAlimentaire, :password)";
         $stmt = $this->pdo->prepare($request);
-        return $stmt->execute([$data->title, $data->description, $data->photo]);
+        $stmt->bindParam(':email', $data->email, PDO::PARAM_STR);
+        $stmt->bindParam(':nom', $data->nom, PDO::PARAM_STR);
+        $stmt->bindParam(":prenom" , $data->prenom, PDO::PARAM_STR);
+        $stmt->bindParam(":avatar" , $data->avatar, PDO::PARAM_STR);
+        $stmt->bindParam(":regimeAlimentaire" , $data->regimeAlimentaire, PDO::PARAM_STR);
+        $stmt->bindParam(":password" , $data->password, PDO::PARAM_STR);
+        return $stmt->execute([$data->id_email, $data->nom, $data->prenom, $data->avatar, $data->regimeAlimentaire, $data->password]);
     }
 }

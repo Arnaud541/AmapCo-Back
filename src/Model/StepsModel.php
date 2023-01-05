@@ -43,8 +43,11 @@ class StepsModel
 
     public function insert($data)
     {
-        $request = "INSERT INTO Recipe (title, description, photo) VALUES (?,?,?)";
+        $request = "INSERT INTO Etape (id_recette, numero, contenu) VALUES (:id_recette, :numero, :contenu)";
         $stmt = $this->pdo->prepare($request);
-        return $stmt->execute([$data->title, $data->description, $data->photo]);
+        $stmt->bindParam(':id_recette', $data->id_recette, PDO::PARAM_STR);
+        $stmt->bindParam(':numero', $data->numero, PDO::PARAM_INT);
+        $stmt->bindParam(":contenu" , $data->contenu, PDO::PARAM_STR);
+        return $stmt->execute([$data->id_recette, $data->numero, $data->contenu]);
     }
 }
