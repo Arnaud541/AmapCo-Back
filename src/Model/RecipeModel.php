@@ -50,7 +50,7 @@ class RecipeModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function insertRecipe($data)
+    public function insert($data)
     {
         $request = "INSERT INTO Recipe (title, description, photo) VALUES (?,?,?)";
         $stmt = $this->pdo->prepare($request);

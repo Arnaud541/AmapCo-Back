@@ -16,9 +16,9 @@ class RecipeController
         echo json_encode($response);
     }
 
-    public function insertRecipe($data)
+    public function insert($data)
     {
-        if ((new RecipeModel)->insertRecipe($data)) {
+        if ((new RecipeModel)->insert($data)) {
             $response = ['status' => 200, 'message' => "La recette a bien été enregistrée"];
         } 
         else {
