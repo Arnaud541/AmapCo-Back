@@ -12,17 +12,17 @@ class SubscriptionCartController
     public function get()
     {
         $data = (new SubscriptionCartModel)->getAll();
-        $response = ['status' => 200, 'commentaires' => $data];
+        $response = ['status' => 200, 'aboPanier' => $data];
         echo json_encode($response);
     }
 
     public function insert($data)
     {
         if ((new SubscriptionCartModel)->insert($data)) {
-            $response = ['status' => 200, 'message' => "Le commentaire a bien été enregistrée"];
+            $response = ['status' => 200, 'message' => "L abonnement a bien été enregistrée"];
         } 
         else {
-            $response = ['status' => 400, 'message' => "L'enregistrement de le commentaire a échoué"];
+            $response = ['status' => 400, 'message' => "L'enregistrement de l abonnement a échoué"];
         }
         echo json_encode($response);
     }

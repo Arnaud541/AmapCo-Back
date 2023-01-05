@@ -12,17 +12,17 @@ class GrowerNoteController
     public function get()
     {
         $data = (new GrowerNoteModel)->getAll();
-        $response = ['status' => 200, 'commentaires' => $data];
+        $response = ['status' => 200, 'growerNote' => $data];
         echo json_encode($response);
     }
 
     public function insert($data)
     {
         if ((new GrowerNoteModel)->insert($data)) {
-            $response = ['status' => 200, 'message' => "Le commentaire a bien été enregistrée"];
+            $response = ['status' => 200, 'message' => "La note a bien été enregistrée"];
         } 
         else {
-            $response = ['status' => 400, 'message' => "L'enregistrement de le commentaire a échoué"];
+            $response = ['status' => 400, 'message' => "L'enregistrement de la note a échoué"];
         }
         echo json_encode($response);
     }
