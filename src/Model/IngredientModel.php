@@ -43,7 +43,7 @@ class IngredientModel
 
     public function insert($data)
     {
-        $request = "INSERT INTO NoteProducteur (nom) VALUES (:nom)";
+        $request = "INSERT INTO Ingredient (nom) VALUES (:nom)";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(':nom', $data->nom, PDO::PARAM_STR);
         return $stmt->execute([$data->nom]);
