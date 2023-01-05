@@ -21,7 +21,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new RecipeController)->insertRecipe($data);
+                    (new RecipeController)->insert($data);
                     break;
             }
             break;
@@ -32,7 +32,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new UserController)->insertUser($data);
+                    (new UserController)->insert($data);
                     break;
             }
             break;
@@ -43,7 +43,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new GrowerController)->insertGrower($data);
+                    (new GrowerController)->insert($data);
                     break;
             }
             break;
@@ -54,7 +54,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new ProducerCartController)->insertProducerCart($data);
+                    (new ProducerCartController)->insert($data);
                     break;
             }
             break;
@@ -65,7 +65,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new SubscriptionCartController)->insertSubscriptionCart($data);
+                    (new SubscriptionCartController)->insert($data);
                     break;
             }
             break;
@@ -76,7 +76,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new CommentsController)->insertComments($data);
+                    (new CommentsController)->insert($data);
                     break;
             }
             break;
@@ -87,7 +87,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new ResponseCommentsController)->insertResponseComments($data);
+                    (new ResponseCommentsController)->insert($data);
                     break;
             }
             break;
@@ -98,7 +98,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new GrowerNoteController)->insertGrowerNote($data);
+                    (new GrowerNoteController)->insert($data);
                     break;
             }
             break;
@@ -109,7 +109,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new RecipeNoteController)->insertRecipeNote($data);
+                    (new RecipeNoteController)->insert($data);
                     break;
             }
             break;
@@ -120,7 +120,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new ProductController)->insertProduct($data);
+                    (new ProductController)->insert($data);
                     break;
             }
             break;
@@ -131,7 +131,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new IngredientController)->insertIngredient($data);
+                    (new IngredientController)->insert($data);
                     break;
             }
             break;   
@@ -142,7 +142,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new StepsController)->insertSteps($data);
+                    (new StepsController)->insert($data);
                     break;
             }
             break;
@@ -153,7 +153,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new UstensilsController)->insertUstensils($data);
+                    (new UstensilsController)->insert($data);
                     break;
             }
             break; 
