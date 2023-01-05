@@ -9,14 +9,6 @@ use AMAP\Model\RecipeModel;
 
 class RecipeController
 {
-    /**
-     * sorted : true/false;
-     * params{
-     *      diet : "vegetarien",
-     *      ingredients : "steak",
-     *      ...
-     * }
-     */
     public function get()
     {
         $recipes = (new RecipeModel)->getAll();
