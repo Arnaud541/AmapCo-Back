@@ -5,7 +5,7 @@ namespace AMAP\Model;
 use PDO;
 use AMAP\Database\DbConnect;
 
-class CommentsModel
+class ProducerCartModel
 {
     private $pdo;
 
