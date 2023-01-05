@@ -14,13 +14,6 @@ class RecipeModel
         $this->pdo = (new DbConnect)->connect();
     }
 
-    // public function getAll()
-    // {
-    //     $request = "SELECT * FROM Recipe";
-    //     $stmt = $this->pdo->query($request);
-    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // }
-
     public function getAll()
     {
         $params = [];
@@ -40,10 +33,8 @@ class RecipeModel
             $request = $request . $param . " = :" . $param;
             $firstLoop = true;
         }
-        //echo $request;
         $stmt = $this->pdo->prepare($request);
         foreach ($params as $param => $value) {
-            //echo "<br>".$param.":".$value;
             $stmt->bindParam(":" . $param, $value, PDO::PARAM_STR);
         }
         $stmt->execute();
