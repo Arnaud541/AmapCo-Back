@@ -29,7 +29,7 @@ class RecipeModel
                 $params[$param] = $value;
             }
         }
-        $request = "SELECT * FROM recipe";
+        $request = "SELECT * FROM Recette";
         $firstLoop = false;
         foreach ($params as $param => $value) {
             if ($firstLoop == true) {
@@ -40,11 +40,14 @@ class RecipeModel
             $request = $request . $param . " = :" . $param;
             $firstLoop = true;
         }
+        //echo $request;
         $stmt = $this->pdo->prepare($request);
         foreach ($params as $param => $value) {
+            //echo "<br>".$param.":".$value;
             $stmt->bindParam(":" . $param, $value, PDO::PARAM_STR);
         }
-        return $stmt->execute();
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function insertRecipe($data)
