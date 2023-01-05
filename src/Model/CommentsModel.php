@@ -43,8 +43,12 @@ class CommentsModel
 
     public function insert($data)
     {
-        $request = "INSERT INTO Recipe (title, description, photo) VALUES (?,?,?)";
+        $request = "INSERT INTO Commentaire (id_utilisateur, id_recette, texte, contenu) VALUES (:id_utilisateur,:id_recette,:texte,:contenu)";
         $stmt = $this->pdo->prepare($request);
-        return $stmt->execute([$data->title, $data->description, $data->photo]);
+        $stmt->bindParam(':id_utilisateur', $data->id_utilisateur, PDO::PARAM_INT);
+        $stmt->bindParam(':id_recette', $data->id_recette, PDO::PARAM_INT);
+        $stmt->bindParam(":texte" , $data->texte, PDO::PARAM_STR);
+        $stmt->bindParam(":contenu" , $data->contenu, PDO::PARAM_STR);
+        return $stmt->execute([$data->id_utilisateur, $data->id_recette, $data->texte, $data->contenu]);
     }
 }
