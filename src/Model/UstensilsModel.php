@@ -43,8 +43,9 @@ class UstensilsModel
 
     public function insert($data)
     {
-        $request = "INSERT INTO Recipe (title, description, photo) VALUES (?,?,?)";
+        $request = "INSERT INTO Ustensile (nom) VALUES (:nom)";
         $stmt = $this->pdo->prepare($request);
-        return $stmt->execute([$data->title, $data->description, $data->photo]);
+        $stmt->bindParam(':nom', $data->nom, PDO::PARAM_STR);
+        return $stmt->execute([$data->nom]);
     }
 }
