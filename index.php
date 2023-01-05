@@ -3,7 +3,19 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
+use AMAP\Controller\UserController;
+use AMAP\Controller\StepsController;
+use AMAP\Controller\GrowerController;
 use AMAP\Controller\RecipeController;
+use AMAP\Controller\ProductController;
+use AMAP\Controller\CommentsController;
+use AMAP\Controller\UstensilsController;
+use AMAP\Controller\GrowerNoteController;
+use AMAP\Controller\IngredientController;
+use AMAP\Controller\RecipeNoteController;
+use AMAP\Controller\ProducerCartController;
+use AMAP\Controller\ResponseCommentsController;
+use AMAP\Controller\SubscriptionCartController;
 
 require 'vendor/autoload.php';
 
@@ -50,7 +62,7 @@ if (isset($_GET["action"])) {
         case 'producercart':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new ProducerCartController)->getAll();
+                    (new ProducerCartController)->get();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
