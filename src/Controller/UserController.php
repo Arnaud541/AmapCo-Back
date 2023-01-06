@@ -26,4 +26,14 @@ class UserController
         }
         echo json_encode($response);
     }
+    public function login()
+    {
+        if ((new UserModel)->login()) {
+            $response = ['status' => 200, 'message' => "Connexion réussie"];
+        } 
+        else {
+            $response = ['status' => 400, 'message' => "Connexion échouée"];
+        }
+        echo json_encode($response);
+    }
 }

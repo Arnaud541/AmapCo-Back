@@ -4,6 +4,7 @@ namespace AMAP\Model;
 
 use PDO;
 use AMAP\Database\DbConnect;
+use AMAP\Exceptions\AuthentificationException;
 
 class UserModel
 {
@@ -62,6 +63,21 @@ class UserModel
             $stmt->bindParam(":regimeAlimentaire", $data->regimeAlimentaire, PDO::PARAM_STR);
             $stmt->bindParam(":password", $data->password, PDO::PARAM_STR);
             $stmt->execute();   
+            return true;
+        }
+    }
+    
+    public function login()
+    {
+        $email = $_GET['email'];
+        $password = $_GET['password'];
+        $stmt = $this->pdo->prepare("SELECT * FROM Utilisateur WHERE email=? AND password=?");
+        $stmt->execute([$email,$password]); 
+        $user = $stmt->fetch();
+        if (!$user) {
+            return false;
+        }
+        else{
             return true;
         }
     }
