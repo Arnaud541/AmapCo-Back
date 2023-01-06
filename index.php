@@ -55,6 +55,7 @@ if (isset($_GET["action"])) {
                     (new UserController)->login();
                     break;
             }
+            break;
         case 'grower':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
