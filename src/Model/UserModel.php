@@ -73,10 +73,10 @@ class UserModel
         }
     }
     
-    public function login($data)
+    public function login()
     {
-        $email = $data->email;
-        $password=$data->password;
+        $email = $_GET['email'];
+        $password = $_GET['password'];
         $stmt = $this->pdo->prepare("SELECT * FROM Utilisateur WHERE email=? AND password=?");
         $stmt->execute([$email,$password]); 
         $user = $stmt->fetch();

@@ -26,9 +26,9 @@ class UserController
         }
         echo json_encode($response);
     }
-    public function login($data)
+    public function login()
     {
-        if ((new UserModel)->login($data)) {
+        if ((new UserModel)->login()) {
             $response = ['status' => 200, 'message' => "Connexion réussie"];
         } 
         else {
