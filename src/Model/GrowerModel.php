@@ -43,6 +43,16 @@ class GrowerModel
 
     public function insert($data)
     {
+        $email = $data->email;
+        $stmt = $this->pdo->prepare("SELECT * FROM Producteur WHERE email=?");
+        $stmt->execute([$email]); 
+        $user = $stmt->fetch();
+        if ($user) 
+        {
+            return false;
+        } 
+        else 
+        {
         $request = "INSERT INTO Producteur (email, nom, prenom, avatar, region, adresse, codePostal) VALUES (:email,:nom,:prenom,:avatar,:region,:adresse,:codePostal)";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(':email', $data->email, PDO::PARAM_STR);
@@ -52,6 +62,23 @@ class GrowerModel
         $stmt->bindParam(":region" , $data->region, PDO::PARAM_STR);
         $stmt->bindParam(":adresse" , $data->adresse, PDO::PARAM_STR);
         $stmt->bindParam(":codePostal" , $data->codePostal, PDO::PARAM_STR);
-        return $stmt->execute([$data->email, $data->nom, $data->prenom, $data->avatar,$data->region,$data->adresse,$data->codePostal]);
+        $stmt->execute();
+        return true;
+        }
+    }
+
+    public function login()
+    {
+        $email = $_GET['email'];
+        $password = $_GET['password'];
+        $stmt = $this->pdo->prepare("SELECT * FROM Producteur WHERE email=? AND password=?");
+        $stmt->execute([$email,$password]); 
+        $user = $stmt->fetch();
+        if (!$user) {
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }
