@@ -48,7 +48,7 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
-        case 'login':
+        case 'loginUser':
             switch ($_SERVER["REQUEST_METHOD"]) 
             {
                 case 'GET':
@@ -67,6 +67,14 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+            case 'loginGrower':
+                switch ($_SERVER["REQUEST_METHOD"]) 
+                {
+                    case 'GET':
+                        (new GrowerController)->login();
+                        break;
+                }
+                break;
         case 'producercart':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
