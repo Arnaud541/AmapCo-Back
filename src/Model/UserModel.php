@@ -43,12 +43,6 @@ class UserModel
 
     public function insert($data)
     {
-        // Vérifier si un utilisateur n'existe pas déjà grâce à l'email entré par l'utilisateur courant dans le formulaire
-        // Si existe
-        // return $stmt->execute([...]) sera égale à false
-        // Sinon
-        // return $stmt->execute([...]) sera égale à true
-
         $email = $data->email;
         $stmt = $this->pdo->prepare("SELECT * FROM Utilisateur WHERE email=?");
         $stmt->execute([$email]); 
