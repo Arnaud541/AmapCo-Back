@@ -12,7 +12,7 @@ class IngredientController
     public function get()
     {
         $data = (new IngredientModel)->getAll();
-        $response = ['status' => 200, 'ingredient' => $data];
+        $response = ['status' => 200, 'ingredients' => $data];
         echo json_encode($response);
     }
 
@@ -20,8 +20,7 @@ class IngredientController
     {
         if ((new IngredientModel)->insert($data)) {
             $response = ['status' => 200, 'message' => "L ingredient a bien été enregistrée"];
-        } 
-        else {
+        } else {
             $response = ['status' => 400, 'message' => "L'enregistrement de l ingredient a échoué"];
         }
         echo json_encode($response);

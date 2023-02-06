@@ -37,6 +37,21 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'recipeById':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new RecipeController)->getById();
+                    break;
+            }
+            break;
+
+        case 'recipeSearch':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new RecipeController)->getBySearch();
+                    break;
+            }
+            break;
         case 'user':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
@@ -67,15 +82,7 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
-            case 'loginGrower':
-                switch ($_SERVER["REQUEST_METHOD"]) 
-                {
-                    case 'GET':
-                        (new GrowerController)->login();
-                        break;
-                }
-                break;
-        case 'producercart':
+        case 'producerCart':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
                     (new ProducerCartController)->get();
@@ -86,7 +93,7 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
-        case 'subscriptioncart':
+        case 'subscription':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
                     (new SubscriptionCartController)->get();
@@ -100,7 +107,7 @@ if (isset($_GET["action"])) {
         case 'comments':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new CommentsController)->get();
+                    (new RecipeController)->getComments();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -108,7 +115,7 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
-        case 'responsecomments':
+        case 'responseComments':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
                     (new ResponseCommentsController)->get();
@@ -119,7 +126,7 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
-        case 'growernote':
+        case 'growerNote':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
                     (new GrowerNoteController)->get();
@@ -130,10 +137,10 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
-        case 'recipenote':
+        case 'recipeNote':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new RecipeNoteController)->get();
+                    (new RecipeController)->getNote();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -155,18 +162,18 @@ if (isset($_GET["action"])) {
         case 'ingredient':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new IngredientController)->get();
+                    (new RecipeController)->getIngredients();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
                     (new IngredientController)->insert($data);
                     break;
             }
-            break;   
+            break;
         case 'steps':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new StepsController)->get();
+                    (new RecipeController)->getSteps();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
@@ -177,17 +184,16 @@ if (isset($_GET["action"])) {
         case 'ustensils':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new UstensilsController)->get();
+                    (new RecipeController)->getUstensils();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
                     (new UstensilsController)->insert($data);
                     break;
             }
-            break; 
+            break;
     }
-} 
-else {
+} else {
     $response = ['status' => 200, 'message' => 'Erreur d\'accès à l\'API'];
     echo json_encode($response);
 }

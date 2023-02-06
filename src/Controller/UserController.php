@@ -19,10 +19,9 @@ class UserController
     public function insert($data)
     {
         if ((new UserModel)->insert($data)) {
-            $response = ['status' => 200, 'message' => "Le user a bien été enregistrée"];
-        } 
-        else {
-            $response = ['status' => 400, 'message' => "L'enregistrement du user a échoué"];
+            $response = ['status' => 200, 'message' => "L'utilisateur a bien été enregistrée"];
+        } else {
+            $response = ['status' => 400, 'message' => "L'enregistrement a échoué"];
         }
         echo json_encode($response);
     }
