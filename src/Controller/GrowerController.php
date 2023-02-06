@@ -12,7 +12,7 @@ class GrowerController
     public function get()
     {
         $data = (new GrowerModel)->getAll();
-        $response = ['status' => 200, 'producteur' => $data];
+        $response = ['status' => 200, 'producteurs' => $data];
         echo json_encode($response);
     }
 
@@ -20,8 +20,7 @@ class GrowerController
     {
         if ((new GrowerModel)->insert($data)) {
             $response = ['status' => 200, 'message' => "Le producteur a bien été enregistrée"];
-        } 
-        else {
+        } else {
             $response = ['status' => 400, 'message' => "L'enregistrement du producteur a échoué"];
         }
         echo json_encode($response);
