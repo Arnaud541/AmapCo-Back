@@ -61,6 +61,15 @@ class RecipeController
         }
     }
 
+    public function getNote()
+    {
+        if (isset($_GET["id"])) {
+            $data = (new RecipeModel)->getNote($_GET["id"]);
+            $response = ['status' => 200, 'note' => $data];
+            echo json_encode($response);
+        }
+    }
+
     public function getBySearch()
     {
         $recipes = (new RecipeModel)->getBySearch();

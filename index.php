@@ -132,7 +132,7 @@ if (isset($_GET["action"])) {
         case 'recipeNote':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new RecipeNoteController)->get();
+                    (new RecipeController)->getNote();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));

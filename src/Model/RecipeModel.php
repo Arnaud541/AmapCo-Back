@@ -60,14 +60,8 @@ class RecipeModel
 
     public function getById($id)
     {
-        $request = "SELECT Recette.titre, Recette.photo, Recette.dureeRealisation, Recette.saison, Recette.difficulte, Recette.typePlat, Recette.regimeAlimentaire, Contenir.quantite, Ingredient.nom as nomIngredient, Ustensile.nom as nomUstensile, Etape.numero, Etape.contenu, Commentaire.contenu as commentaire 
+        $request = "SELECT Recette.titre, Recette.photo, Recette.dureeRealisation, Recette.saison, Recette.difficulte, Recette.typePlat, Recette.regimeAlimentaire 
         FROM Recette 
-        INNER JOIN Contenir ON Recette.id = Contenir.id_recette 
-        INNER JOIN Ingredient ON Contenir.id_ingredient = Ingredient.id
-        INNER JOIN Utiliser ON Recette.id = Utiliser.id_recette
-        INNER JOIN Ustensile ON Utiliser.id_ustensile = Ustensile.id
-        INNER JOIN Etape ON Recette.id = Etape.id_recette
-        INNER JOIN Commentaire ON Recette.id = Commentaire.id_recette
         WHERE Recette.id = :id";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam('id', $id, PDO::PARAM_INT);
@@ -112,5 +106,14 @@ class RecipeModel
         $stmt->bindParam('id', $idRecipe, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getNote($idRecipe)
+    {
+        $request = "SELECT AVG(note) AS note FROM NoteRecette WHERE id_recette = :id";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam('id', $idRecipe, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
