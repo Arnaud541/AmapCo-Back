@@ -19,7 +19,7 @@ class GrowerController
     public function getById()
     {
         if (isset($_GET["id"])) {
-            $data = (new GrowerModel)->getById();
+            $data = (new GrowerModel)->getById($_GET['id']);
             $response = ['status' => 200, 'producteur' => $data];
             echo json_encode($response);
         }

@@ -43,7 +43,11 @@ class GrowerModel
 
     public function getById($idGrower)
     {
-        $request = "SELECT CONCAT(Producteur.nom, ' ',Producteur.prenom) AS nom";
+        $request = "SELECT CONCAT(Producteur.nom, ' ',Producteur.prenom) AS nom, created_at, avatar FROM Producteur where id=:id";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam('id', $idGrower, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function insert($data)

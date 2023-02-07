@@ -198,6 +198,13 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'GrowerById':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new GrowerController)->getById();
+                    break;
+            }
+            break;
     }
 } else {
     $response = ['status' => 200, 'message' => 'Erreur d\'accès à l\'API'];
