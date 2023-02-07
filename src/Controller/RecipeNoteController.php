@@ -20,8 +20,7 @@ class RecipeNoteController
     {
         if ((new RecipeNoteModel)->insert($data)) {
             $response = ['status' => 200, 'message' => "La note a bien été enregistrée"];
-        } 
-        else {
+        } else {
             $response = ['status' => 400, 'message' => "L'enregistrement de la note a échoué"];
         }
         echo json_encode($response);

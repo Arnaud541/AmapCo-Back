@@ -73,7 +73,12 @@ class RecipeModel
 
     public function getComments($idRecipe)
     {
-        $request = "SELECT id, contenu FROM Commentaire WHERE id_recette = :id";
+        $request = "SELECT Commentaire.id, Commentaire.contenu, Commentaire.created_at, CONCAT(Utilisateur.nom, ' ', Utilisateur.prenom) AS nom, Utilisateur.avatar, NoteRecette.note 
+        FROM Recette 
+        INNER JOIN Commentaire ON Commentaire.id_recette = Recette.id 
+        INNER JOIN Utilisateur ON Utilisateur.id = Commentaire.id_utilisateur 
+        LEFT JOIN NoteRecette ON NoteRecette.id_recette = Recette.id AND NoteRecette.id_utilisateur = Utilisateur.id 
+        WHERE Recette.id = :id";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam('id', $idRecipe, PDO::PARAM_INT);
         $stmt->execute();

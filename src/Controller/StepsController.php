@@ -20,9 +20,8 @@ class StepsController
     {
         if ((new StepsModel)->insert($data)) {
             $response = ['status' => 200, 'message' => "L etape a bien été enregistrée"];
-        } 
-        else {
-            $response = ['status' => 400, 'message' => "L'enregistrement de l etape a échoué"];
+        } else {
+            $response = ['status' => 400, 'message' => "L'enregistrement de l'etape a échoué"];
         }
         echo json_encode($response);
     }

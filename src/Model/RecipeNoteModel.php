@@ -45,9 +45,9 @@ class RecipeNoteModel
     {
         $request = "INSERT INTO NoteRecette (id_recette, id_utilisateur, note) VALUES (:id_recette, :id_utilisateur, :note)";
         $stmt = $this->pdo->prepare($request);
-        $stmt->bindParam(':id_recette', $data->id_recette, PDO::PARAM_STR);
-        $stmt->bindParam(':id_utilisateur', $data->id_utilisateur, PDO::PARAM_STR);
-        $stmt->bindParam(':note', $data->note, PDO::PARAM_STR);
-        return $stmt->execute([$data->id_recette, $data->id_utilisateur, $data->note]);
+        $stmt->bindParam(':id_recette', $data->id_recette, PDO::PARAM_INT);
+        $stmt->bindParam(':id_utilisateur', $data->id_utilisateur, PDO::PARAM_INT);
+        $stmt->bindParam(':note', $data->note, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 }

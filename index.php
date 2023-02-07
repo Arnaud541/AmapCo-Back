@@ -37,6 +37,11 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'allIngredients':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new IngredientController)->get();
+            }
         case 'recipeById':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
@@ -170,6 +175,7 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+
         case 'steps':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':

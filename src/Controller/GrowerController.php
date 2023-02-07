@@ -16,6 +16,15 @@ class GrowerController
         echo json_encode($response);
     }
 
+    public function getById()
+    {
+        if (isset($_GET["id"])) {
+            $data = (new GrowerModel)->getById();
+            $response = ['status' => 200, 'producteur' => $data];
+            echo json_encode($response);
+        }
+    }
+
     public function insert($data)
     {
         if ((new GrowerModel)->insert($data)) {
