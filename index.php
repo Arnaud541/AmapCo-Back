@@ -41,7 +41,9 @@ if (isset($_GET["action"])) {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
                     (new IngredientController)->get();
+                    break;
             }
+            break;
         case 'recipeById':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
@@ -49,7 +51,6 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
-
         case 'recipeSearch':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
@@ -69,8 +70,7 @@ if (isset($_GET["action"])) {
             }
             break;
         case 'loginUser':
-            switch ($_SERVER["REQUEST_METHOD"]) 
-            {
+            switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
                     (new UserController)->login();
                     break;
