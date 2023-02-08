@@ -211,6 +211,13 @@ if (isset($_GET["action"])) {
                     (new GrowerController)->getGrowerCart();
                     break;
             }
+            break;
+        case 'growerreview':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new GrowerController)->getGrowerReview();
+                    break;
+            }
     }
 } else {
     $response = ['status' => 200, 'message' => 'Erreur d\'accès à l\'API'];
