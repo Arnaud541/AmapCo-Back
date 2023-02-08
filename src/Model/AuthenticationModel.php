@@ -16,14 +16,13 @@ class AuthenticationModel
 
     public function login($data)
     {
-        $password = md5($data->password);
-        var_dump($data->password);
-        $stmt = $this->pdo->prepare("SELECT * FROM Utilisateur WHERE email = :email AND password = :pwd");
+        $stmt = $this->pdo->prepare("SELECT * FROM Utilisateur WHERE email = :email");
         $stmt->bindParam('email', $data->email, PDO::PARAM_STR);
-        $stmt->bindParam('pwd', $password, PDO::PARAM_STR);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $user ? true : false;
+        if ($user) {
+            return md5($data->password) === $user["password"] ? true : false;
+        }
     }
 
     public function insert($data)
