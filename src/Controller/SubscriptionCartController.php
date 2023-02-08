@@ -16,14 +16,14 @@ class SubscriptionCartController
         echo json_encode($response);
     }
 
-    public function insert($data)
-    {
-        if ((new SubscriptionCartModel)->insert($data)) {
-            $response = ['status' => 200, 'message' => "L abonnement a bien été enregistrée"];
-        } 
-        else {
-            $response = ['status' => 400, 'message' => "L'enregistrement de l abonnement a échoué"];
-        }
-        echo json_encode($response);
-    }
+    // public function insert($data)
+    // {
+    //     if ((new SubscriptionCartModel)->insert($data)) {
+    //         $response = ['status' => 200, 'message' => "L abonnement a bien été enregistrée"];
+    //     } 
+    //     else {
+    //         $response = ['status' => 400, 'message' => "L'enregistrement de l abonnement a échoué"];
+    //     }
+    //     echo json_encode($response);
+    // }
 }

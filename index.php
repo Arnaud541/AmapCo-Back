@@ -3,6 +3,7 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
+use AMAP\Controller\AuthenticationController;
 use AMAP\Controller\UserController;
 use AMAP\Controller\StepsController;
 use AMAP\Controller\GrowerController;
@@ -44,6 +45,11 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'allUstensils':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new UstensilsController)->get();
+            }
         case 'recipeById':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
@@ -98,6 +104,22 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'signIn':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'POST':
+                    $data = json_decode(file_get_contents("php://input"));
+                    (new AuthenticationController)->login($data);
+                    break;
+            }
+            break;
+        case 'signUp':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'POST':
+                    $data = json_decode(file_get_contents("php://input"));
+                    (new AuthenticationController)->insert($data);
+                    break;
+            }
+            break;
         case 'subscription':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
@@ -105,7 +127,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new SubscriptionCartController)->insert($data);
+                    // (new SubscriptionCartController)->insert($data);
                     break;
             }
             break;
@@ -187,6 +209,7 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+
         case 'ustensils':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
