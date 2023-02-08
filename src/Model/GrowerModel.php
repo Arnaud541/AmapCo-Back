@@ -50,6 +50,16 @@ class GrowerModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    public function getGrowerCart($idgrowerCart)
+    {
+        $request = "SELECT * FROM PanierProducteur WHERE id_producteur=:id ";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam('id', $idgrowerCart, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function insert($data)
     {
         $email = $data->email;

@@ -25,6 +25,15 @@ class GrowerController
         }
     }
 
+    public function getGrowerCart()
+    {
+        if (isset($_GET["id"])) {
+            $data = (new GrowerModel)->getGrowerCart($_GET['id']);
+            $response = ['status' => 200, 'producteur' => $data];
+            echo json_encode($response);
+        }
+    }
+
     public function insert($data)
     {
         if ((new GrowerModel)->insert($data)) {
