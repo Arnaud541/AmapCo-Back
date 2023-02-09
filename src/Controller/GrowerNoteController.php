@@ -16,6 +16,13 @@ class GrowerNoteController
         echo json_encode($response);
     }
 
+    public function getNote()
+    {
+        $data = (new GrowerNoteModel)->getNote();
+        $response = ['status' => 200, 'growerNote' => $data];
+        echo json_encode($response);
+    }
+
     public function insert($data)
     {
         if ((new GrowerNoteModel)->insert($data)) {
