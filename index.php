@@ -235,15 +235,22 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
-        case 'growerNoteById':
+        case 'growerreview':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new GrowerNoteController)->getNote($_GET["id_producteur"]);
+                    (new GrowerController)->getGrowerReview();
                     break;
             }
             break;
+    //     case 'growerNoteById':
+    //         switch ($_SERVER["REQUEST_METHOD"]) {
+    //             case 'GET':
+    //                 (new GrowerNoteController)->getNote($_GET["id_producteur"]);
+    //                 break;
+    //         }
+    //         break;
     }
-} else {
+    } else {
     $response = ['status' => 200, 'message' => 'Erreur d\'accès à l\'API'];
     echo json_encode($response);
 }
