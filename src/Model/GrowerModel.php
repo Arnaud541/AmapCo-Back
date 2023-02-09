@@ -60,14 +60,14 @@ class GrowerModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // public function getGrowerReview($idgrowerReview)
-    // {
-    //     $request = "SELECT * FROM NoteProducteur WHERE id_producteur=:id ";
-    //     $stmt = $this->pdo->prepare($request);
-    //     $stmt->bindParam('id', $idgrowerReview, PDO::PARAM_INT);
-    //     $stmt->execute();
-    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // }
+    public function getGrowerReview($idgrowerReview)
+    {
+        $request = "SELECT * FROM NoteProducteur WHERE id_producteur=:id ";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam('id', $idgrowerReview, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function insert($data)
     {
