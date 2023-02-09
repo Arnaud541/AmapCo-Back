@@ -50,6 +50,14 @@ class GrowerModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getByIdProducerCart($id_producteur)
+    {
+        $request = "select PanierProducteur.nom as nomPanier,Producteur.nom,Producteur.prenom,Producteur.id from Producteur inner join PanierProducteur on Producteur.id = PanierProducteur.id_producteur where PanierProducteur.id_producteur = :id_producteur;";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(":id_producteur",$id_producteur,PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function getGrowerCart($idgrowerCart)
     {
