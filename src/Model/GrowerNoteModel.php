@@ -41,9 +41,10 @@ class GrowerNoteModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getNote()
+    public function getNote($id_producteur)
     {
         $request = "select nom,prenom,id from Utilisateur inner join NoteProducteur on Utilisateur.id = NoteProducteur.id_utilisateur where NoteProducteur.id_producteur = :id_producteur;";
+        echo $request;
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(":id_producteur",$id_producteur,PDO::PARAM_INT);
         $stmt->execute();

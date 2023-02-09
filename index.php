@@ -235,10 +235,10 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
-        case 'growerreview':
+        case 'growerNoteById':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new GrowerController)->getGrowerReview();
+                    (new GrowerNoteController)->getNote($_GET["id_producteur"]);
                     break;
             }
             break;
