@@ -63,7 +63,7 @@ class GrowerModel
     {
         $request = "SELECT * FROM PanierProducteur WHERE id_producteur=:id ";
         $stmt = $this->pdo->prepare($request);
-        $stmt->bindParam('id', $idgrowerCart, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $idgrowerCart, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -72,7 +72,7 @@ class GrowerModel
     {
         $request = "SELECT * FROM NoteProducteur WHERE id_producteur=:id ";
         $stmt = $this->pdo->prepare($request);
-        $stmt->bindParam('id', $idgrowerReview, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $idgrowerReview, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

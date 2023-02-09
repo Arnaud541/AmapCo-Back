@@ -235,6 +235,13 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'growerreview':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new GrowerController)->getGrowerReview($_GET["idgrowerReview"]);
+                    break;
+            }
+            break;
         case 'growerNoteById':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
