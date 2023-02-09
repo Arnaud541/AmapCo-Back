@@ -46,14 +46,11 @@ class UserModel
     {
         $email = $data->email;
         $stmt = $this->pdo->prepare("SELECT * FROM Utilisateur WHERE email=?");
-        $stmt->execute([$email]); 
+        $stmt->execute([$email]);
         $user = $stmt->fetch();
-        if ($user) 
-        {
+        if ($user) {
             return false;
-        } 
-        else 
-        {
+        } else {
             $request = "INSERT INTO Utilisateur (email, nom, prenom, avatar, regimeAlimentaire, password) VALUES (:email, :nom, :prenom, :avatar, :regimeAlimentaire, :password)";
             $stmt = $this->pdo->prepare($request);
             $stmt->bindParam(':email', $data->email, PDO::PARAM_STR);
@@ -62,23 +59,19 @@ class UserModel
             $stmt->bindParam(":avatar", $data->avatar, PDO::PARAM_STR);
             $stmt->bindParam(":regimeAlimentaire", $data->regimeAlimentaire, PDO::PARAM_STR);
             $stmt->bindParam(":password", $data->password, PDO::PARAM_STR);
-            $stmt->execute();   
+            $stmt->execute();
             return true;
         }
     }
-    
-    public function login()
+
+    public function getById($id)
     {
-        $email = $_GET['email'];
-        $password = $_GET['password'];
-        $stmt = $this->pdo->prepare("SELECT * FROM Utilisateur WHERE email=? AND password=?");
-        $stmt->execute([$email,$password]); 
-        $user = $stmt->fetch();
-        if (!$user) {
-            return false;
-        }
-        else{
-            return true;
-        }
+        $request = "SELECT id, CONCAT(Utilisateur.nom, ' ', Utilisateur.prenom) AS nom, avatar, created_at, regimeAlimentaire FROM Utilisateur WHERE id = :id";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user ? $user : null;
     }
 }
