@@ -75,10 +75,10 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
-        case 'loginUser':
+        case 'userById':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new UserController)->login();
+                    (new UserController)->getById();
                     break;
             }
             break;
