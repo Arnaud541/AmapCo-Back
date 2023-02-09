@@ -20,8 +20,9 @@ class AuthenticationController
     }
     public function login($data)
     {
-        if ((new AuthenticationModel)->login($data)) {
-            $response = ['status' => 200, 'message' => "Connexion réussie"];
+        $data = (new AuthenticationModel)->login($data);
+        if (!is_null($data)) {
+            $response = ['status' => 200, 'message' => "Connexion réussie", 'user' => $data];
         } else {
             $response = ['status' => 400, 'message' => "Connexion échouée"];
         }
