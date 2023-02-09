@@ -37,15 +37,8 @@ class GrowerController
     public function getGrowerReview($idgrowerReview)
     {
             $data = (new GrowerModel)->getGrowerReview($idgrowerReview);
-            $response = ['status' => 200, 'review' => $data];
+            $response = ['status' => 200, 'reviews' => $data];
             echo json_encode($response);
-    }
-
-    public function getByIdProducerCart($id_producteur)
-    {
-        $data = (new GrowerModel)->getByIdProducerCart($id_producteur);
-        $response = ['status' => 200, 'growerInfos' => $data];
-        echo json_encode($response);
     }
 
     public function insert($data)

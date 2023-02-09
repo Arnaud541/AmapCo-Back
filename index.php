@@ -238,24 +238,24 @@ if (isset($_GET["action"])) {
         case 'growerreview':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new GrowerController)->getGrowerReview($_GET["idgrowerReview"]);
+                    (new GrowerController)->getGrowerReview($_GET["id"]);
                     break;
             }
             break;
-        case 'growerNoteById':
-            switch ($_SERVER["REQUEST_METHOD"]) {
-                case 'GET':
-                    (new GrowerNoteController)->getNote($_GET["id_producteur"]);
-                    break;
-            }
-            break;
-        case 'growerByIdProducerCart':
-            switch ($_SERVER["REQUEST_METHOD"]) {
-                case 'GET':
-                    (new GrowerController)->getByIdProducerCart($_GET["id_producteur"]);
-                    break;
-            }
-            break;
+        // case 'growerNoteById':
+        //     switch ($_SERVER["REQUEST_METHOD"]) {
+        //         case 'GET':
+        //             (new GrowerNoteController)->getNote($_GET["id_producteur"]);
+        //             break;
+        //     }
+        //     break;
+        // case 'growerByIdProducerCart':
+        //     switch ($_SERVER["REQUEST_METHOD"]) {
+        //         case 'GET':
+        //             (new GrowerController)->getByIdProducerCart($_GET["id_producteur"]);
+        //             break;
+        //     }
+        //     break;
     }
     } else {
     $response = ['status' => 200, 'message' => 'Erreur d\'accès à l\'API'];
