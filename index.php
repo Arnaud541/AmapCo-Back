@@ -235,12 +235,13 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
-        case 'growerreview':
-            switch ($_SERVER["REQUEST_METHOD"]) {
-                case 'GET':
-                    (new GrowerController)->getGrowerReview();
-                    break;
-            }
+        // case 'growerreview':
+        //     switch ($_SERVER["REQUEST_METHOD"]) {
+        //         case 'GET':
+        //             (new GrowerController)->getGrowerReview();
+        //             break;
+        //     }
+        //     break;
     }
 } else {
     $response = ['status' => 200, 'message' => 'Erreur d\'accès à l\'API'];
