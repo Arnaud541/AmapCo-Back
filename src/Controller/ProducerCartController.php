@@ -16,6 +16,12 @@ class ProducerCartController
         echo json_encode($response);
     }
 
+    public function getBySearch(){
+        $carts = (new ProducerCartModel)->getBySearch();
+        $response = ['status' => 200, 'producerCart' => $carts];
+        echo json_encode($response);
+    }
+
     public function insert($data)
     {
         if ((new ProducerCartModel)->insert($data)) {

@@ -242,6 +242,12 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'CartSearch':
+            switch ($_SERVER["REQUEST_METHOD"]){
+                case 'GET':
+                    (new ProducerCartController)->getBySearch();
+                    break;
+            }
         // case 'growerNoteById':
         //     switch ($_SERVER["REQUEST_METHOD"]) {
         //         case 'GET':
