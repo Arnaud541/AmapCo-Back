@@ -34,20 +34,11 @@ class GrowerController
         }
     }
 
-    public function getGrowerReview()
+    public function getGrowerReview($idgrowerReview)
     {
-        if (isset($_GET["id"])) {
-            $data = (new GrowerModel)->getGrowerReview($_GET['id']);
-            $response = ['status' => 200, 'review' => $data];
+            $data = (new GrowerModel)->getGrowerReview($idgrowerReview);
+            $response = ['status' => 200, 'reviews' => $data];
             echo json_encode($response);
-        }
-    }
-
-    public function getByIdProducerCart($id_producteur)
-    {
-        $data = (new GrowerModel)->getByIdProducerCart($id_producteur);
-        $response = ['status' => 200, 'growerInfos' => $data];
-        echo json_encode($response);
     }
 
     public function insert($data)

@@ -43,36 +43,28 @@ class GrowerModel
 
     public function getById($idGrower)
     {
-        $request = "SELECT CONCAT(Producteur.nom, ' ',Producteur.prenom) AS nom, created_at, avatar FROM Producteur WHERE id=:id";
+        $request = "SELECT CONCAT(Producteur.nom,' ',Producteur.prenom) AS nom, created_at, avatar FROM Producteur WHERE id=:id";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam('id', $idGrower, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getByIdProducerCart($id_producteur)
-    {
-        $request = "select PanierProducteur.nom as nomPanier,Producteur.nom,Producteur.prenom,Producteur.id from Producteur inner join PanierProducteur on Producteur.id = PanierProducteur.id_producteur where PanierProducteur.id_producteur = :id_producteur;";
-        $stmt = $this->pdo->prepare($request);
-        $stmt->bindParam(":id_producteur",$id_producteur,PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 
     public function getGrowerCart($idgrowerCart)
     {
         $request = "SELECT * FROM PanierProducteur WHERE id_producteur=:id ";
         $stmt = $this->pdo->prepare($request);
-        $stmt->bindParam('id', $idgrowerCart, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $idgrowerCart, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getGrowerReview($idgrowerReview)
     {
-        $request = "SELECT * FROM NoteProducteur WHERE id_producteur=:id ";
+        $request = "SELECT CONCAT(Utilisateur.nom, ' ', Utilisateur.prenom) AS nom, note, avis FROM NoteProducteur INNER JOIN Utilisateur ON NoteProducteur.id_utilisateur = Utilisateur.id WHERE id_producteur = :id";
         $stmt = $this->pdo->prepare($request);
-        $stmt->bindParam('id', $idgrowerReview, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $idgrowerReview, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
