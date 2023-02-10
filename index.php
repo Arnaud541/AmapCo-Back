@@ -248,13 +248,13 @@ if (isset($_GET["action"])) {
                     (new ProducerCartController)->getBySearch();
                     break;
             }
-        // case 'growerNoteById':
-        //     switch ($_SERVER["REQUEST_METHOD"]) {
-        //         case 'GET':
-        //             (new GrowerNoteController)->getNote($_GET["id_producteur"]);
-        //             break;
-        //     }
-        //     break;
+        case 'cartDetails':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new ProducerCartController)->getCart($_GET["id"]);
+                    break;
+            }
+        
         // case 'growerByIdProducerCart':
         //     switch ($_SERVER["REQUEST_METHOD"]) {
         //         case 'GET':

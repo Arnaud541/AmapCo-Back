@@ -41,6 +41,20 @@ class ProducerCartModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getCart($idProducerCart)
+    {
+        $request = "SELECT PanierProducteur.img_url,PanierProducteur.id,PanierProducteur.nom AS PanierProducteurNom ,Producteur.nom AS ProducteurNom,Producteur.prenom,PanierProducteur.description,Ingredient.nom AS IngredientNom 
+        FROM PanierProducteur 
+        INNER JOIN Producteur ON PanierProducteur.id_producteur = Producteur.id 
+        INNER JOIN Produit ON PanierProducteur.id = Produit.id_panier
+        INNER JOIN Ingredient ON Produit.id_ingredient = Ingredient.id 
+        WHERE PanierProducteur.id = :id;";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(":id", $idProducerCart, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
     public function getBySearch()
     {
