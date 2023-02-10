@@ -25,7 +25,7 @@ class ProducerCartController
     public function getCart($idProducerCart)
     {
             $data = (new ProducerCartModel)->getCart($idProducerCart);
-            $response = ['status' => 200, 'details' => $data];
+            $response = ['status' => 200, 'detail' => $data];
             echo json_encode($response);
     }
 
