@@ -41,6 +41,26 @@ class ProducerCartModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    public function getBySearch()
+    {
+        $request = "SELECT PanierProducteur.nom FROM PanierProducteur INNER JOIN Producteur ON PanierProducteur.id_producteur = Producteur.id WHERE CONCAT(Producteur.nom, Producteur.prenom, PanierProducteur.nom, PanierProducteur.type) LIKE '%" . $_GET["search"]["search"] . "%'";
+        if (!empty($_GET["search"]["filters"])) {
+            $request .= " AND ";
+            $filtres = [];
+            foreach ($_GET["search"]["filters"] as $key => $values) {
+                foreach ($values as $value) {
+                    $t = $key . " = " . "'" . $value . "'";
+                    array_push($filtres, $t);
+                }
+            }
+            $t2 = implode(" OR ", $filtres);
+            $request .= $t2;
+        }
+        $stmt = $this->pdo->query($request);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function insert($data)
     {
         $request = "INSERT INTO PanierProducteur (id_produit,id_producteur,nom,img_url,prix,type) VALUES (:id_produit,:id_producteur,:nom,:img_url,:prix,:type)";
