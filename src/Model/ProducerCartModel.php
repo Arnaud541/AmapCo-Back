@@ -77,7 +77,8 @@ class ProducerCartModel
 
     public function getCartBySearch($ingredient)
     {
-        $request = "SELECT Produit.id_panier,PanierProducteur.nom,PanierProducteur.img_url FROM PanierProducteur INNER JOIN Produit ON PanierProducteur.id = Produit.id_panier INNER JOIN Ingredient ON Produit.id_ingredient = Ingredient.id WHERE Ingredient.nom LIKE ".'":ingredient"%'.";";
+        $request = "SELECT Produit.id_panier,PanierProducteur.nom,PanierProducteur.img_url FROM PanierProducteur INNER JOIN Produit ON PanierProducteur.id = Produit.id_panier INNER JOIN Ingredient ON Produit.id_ingredient = Ingredient.id WHERE Ingredient.nom LIKE :ingredient ;";
+        $ingredient="$ingredient%";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(':ingredient', $ingredient, PDO::PARAM_STR);
         $stmt->execute();
