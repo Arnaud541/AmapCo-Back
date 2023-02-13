@@ -62,7 +62,7 @@ class GrowerModel
 
     public function getGrowerReview($idgrowerReview)
     {
-        $request = "SELECT CONCAT(Utilisateur.nom, ' ', Utilisateur.prenom) AS nom, note, avis FROM NoteProducteur INNER JOIN Utilisateur ON NoteProducteur.id_utilisateur = Utilisateur.id WHERE id_producteur = :id";
+        $request = "SELECT CONCAT(Utilisateur.nom, ' ', Utilisateur.prenom) AS nom, note, avis, NoteProducteur.created_at  FROM NoteProducteur INNER JOIN Utilisateur ON NoteProducteur.id_utilisateur = Utilisateur.id WHERE id_producteur = :id";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(":id", $idgrowerReview, PDO::PARAM_INT);
         $stmt->execute();
