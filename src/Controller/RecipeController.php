@@ -86,6 +86,13 @@ class RecipeController
         }
     }
 
+    public function getAssociatedRecipes()
+    {
+        $recipes = (new RecipeModel)->getAssociatedRecipes();
+        // $response = ['status' => 200, 'recipes' => $recipes];
+        // echo json_encode($response);
+    }
+
     public function insert($data)
     {
         if ((new RecipeModel)->insert($data)) {

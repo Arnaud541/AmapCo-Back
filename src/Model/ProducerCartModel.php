@@ -43,7 +43,7 @@ class ProducerCartModel
 
     public function getCart($idCart)
     {
-        $request = "SELECT PanierProducteur.img_url,PanierProducteur.id,PanierProducteur.nom AS PanierProducteurNom ,Producteur.nom AS ProducteurNom,Producteur.prenom,PanierProducteur.description,Ingredient.nom AS IngredientNom, Produit.quantite
+        $request = "SELECT PanierProducteur.img_url,PanierProducteur.id, Producteur.id AS ProducteurId, PanierProducteur.nom AS PanierProducteurNom ,Producteur.nom AS ProducteurNom,Producteur.prenom,PanierProducteur.description,Ingredient.nom AS IngredientNom, Produit.quantite
         FROM PanierProducteur 
         INNER JOIN Producteur ON PanierProducteur.id_producteur = Producteur.id 
         INNER JOIN Produit ON PanierProducteur.id = Produit.id_panier
