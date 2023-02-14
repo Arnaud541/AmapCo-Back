@@ -25,4 +25,15 @@ class RecipeNoteController
         }
         echo json_encode($response);
     }
+
+    public function getUserNoteByIdRecipe()
+    {
+        if (isset($_GET["id_recette"]) && isset($_GET["id_utilisateur"])) {
+            $data = (new RecipeNoteModel)->getUserNoteByIdRecipe($_GET["id_recette"], $_GET["id_utilisateur"]);
+            if ($data && !is_null($data)) {
+                $response = ['status' => 200, 'note' => $data];
+                echo json_encode($response);
+            }
+        }
+    }
 }

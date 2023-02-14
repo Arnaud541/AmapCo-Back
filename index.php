@@ -49,7 +49,16 @@ if (isset($_GET["action"])) {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
                     (new UstensilsController)->get();
+                    break;
             }
+            break;
+        case 'recipesByIdUser':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new RecipeController)->getRecipesByIdUser();
+                    break;
+            }
+            break;
         case 'recipeById':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
@@ -175,6 +184,13 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'getUserNoteByIdRecipe':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new RecipeNoteController)->getUserNoteByIdRecipe();
+                    break;
+            }
+            break;
         case 'product':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
@@ -243,7 +259,7 @@ if (isset($_GET["action"])) {
             }
             break;
         case 'CartSearch':
-            switch ($_SERVER["REQUEST_METHOD"]){
+            switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
                     (new ProducerCartController)->getBySearch();
                     break;
@@ -256,16 +272,30 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
-        
-        // case 'growerByIdProducerCart':
-        //     switch ($_SERVER["REQUEST_METHOD"]) {
-        //         case 'GET':
-        //             (new GrowerController)->getByIdProducerCart($_GET["id_producteur"]);
-        //             break;
-        //     }
-        //     break;
+
+            // case 'growerByIdProducerCart':
+            //     switch ($_SERVER["REQUEST_METHOD"]) {
+            //         case 'GET':
+            //             (new GrowerController)->getByIdProducerCart($_GET["id_producteur"]);
+            //             break;
+            //     }
+            //     break;
+            // case 'growerNoteById':
+            //     switch ($_SERVER["REQUEST_METHOD"]) {
+            //         case 'GET':
+            //             (new GrowerNoteController)->getNote($_GET["id_producteur"]);
+            //             break;
+            //     }
+            //     break;
+            // case 'growerByIdProducerCart':
+            //     switch ($_SERVER["REQUEST_METHOD"]) {
+            //         case 'GET':
+            //             (new GrowerController)->getByIdProducerCart($_GET["id_producteur"]);
+            //             break;
+            //     }
+            //     break;
     }
-    } else {
+} else {
     $response = ['status' => 200, 'message' => 'Erreur d\'accès à l\'API'];
     echo json_encode($response);
 }

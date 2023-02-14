@@ -77,6 +77,15 @@ class RecipeController
         echo json_encode($response);
     }
 
+    public function getRecipesByIdUser()
+    {
+        if (isset($_GET["id"])) {
+            $recipes = (new RecipeModel)->getRecipesByIdUser($_GET["id"]);
+            $response = ['status' => 200, 'recipes' => $recipes];
+            echo json_encode($response);
+        }
+    }
+
     public function insert($data)
     {
         if ((new RecipeModel)->insert($data)) {
