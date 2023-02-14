@@ -59,6 +59,13 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'associatedRecipes':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new RecipeController)->getAssociatedRecipes();
+                    break;
+            }
+            break;
         case 'recipeById':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
@@ -268,10 +275,11 @@ if (isset($_GET["action"])) {
         case 'cartDetails':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new ProducerCartController)->getCart($_GET["id"]);
+                    (new ProducerCartController)->getCart($_GET["idcart"]);
                     break;
             }
             break;
+
 
             // case 'growerByIdProducerCart':
             //     switch ($_SERVER["REQUEST_METHOD"]) {

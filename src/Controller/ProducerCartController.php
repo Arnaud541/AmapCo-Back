@@ -17,32 +17,32 @@ class ProducerCartController
     }
 
 
-    public function getBySearch(){
+    public function getBySearch()
+    {
         $carts = (new ProducerCartModel)->getBySearch();
         $response = ['status' => 200, 'producerCart' => $carts];
         echo json_encode($response);
     }
 
-    public function getCart($idProducerCart)
+    public function getCart($idCart)
     {
-            $data = (new ProducerCartModel)->getCart($idProducerCart);
-            $response = ['status' => 200, 'detail' => $data];
-            echo json_encode($response);
+        $data = (new ProducerCartModel)->getCart($idCart);
+        $response = ['status' => 200, 'detail' => $data];
+        echo json_encode($response);
     }
 
     public function getCartBySearch($ingredient)
     {
-            $data = (new ProducerCartModel)->getCartBySearch($ingredient);
-            $response = ['status' => 200, 'cart' => $data];
-            echo json_encode($response);
+        $data = (new ProducerCartModel)->getCartBySearch($ingredient);
+        $response = ['status' => 200, 'cart' => $data];
+        echo json_encode($response);
     }
 
     public function insert($data)
     {
         if ((new ProducerCartModel)->insert($data)) {
             $response = ['status' => 200, 'message' => "Le panier a bien été enregistrée"];
-        } 
-        else {
+        } else {
             $response = ['status' => 400, 'message' => "L'enregistrement du panier a échoué"];
         }
         echo json_encode($response);
