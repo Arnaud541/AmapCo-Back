@@ -75,13 +75,17 @@ class RecipeModel
         $stmt->execute();
         $ingredients = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // $request = "SELECT Recette.id FROM Recette 
-        // INNER JOIN Contenir ON Contenir.id_recette = Recette.id 
-        // INNER JOIN Ingredient ON Contenir.id_ingredient = Ingredient.id 
-        // WHERE";
+        $request = "SELECT Recette.id FROM Recette 
+        INNER JOIN Contenir ON Contenir.id_recette = Recette.id 
+        INNER JOIN Ingredient ON Contenir.id_ingredient = Ingredient.id 
+        WHERE";
         $array = [];
         foreach ($ingredients as $i) {
-            var_dump($i);
+            $ing_field = "Ingredient.nom" . " = " . $i["IngredientNom"];
+            array_push($array, $ing_field);
+        }
+
+        foreach ($array as $element) {
         }
     }
 

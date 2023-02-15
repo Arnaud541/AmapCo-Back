@@ -14,41 +14,26 @@ class SubscriptionCartModel
         $this->pdo = (new DbConnect)->connect();
     }
 
-    public function getAll()
+    public function getSubVerification($id_panier, $id_utilisateur)
     {
-        $params = [];
-        if (isset($_GET['params'])) {
-            foreach ($_GET['params'] as $param => $value) {
-                $params[$param] = $value;
-            }
-        }
-        $request = "SELECT * FROM AbonnementPanier";
-        $firstLoop = false;
-        foreach ($params as $param => $value) {
-            if ($firstLoop == true) {
-                $request = $request . " AND ";
-            } else {
-                $request = $request . " WHERE ";
-            }
-            $request = $request . $param . " = :" . $param;
-            $firstLoop = true;
-        }
+        $request = "SELECT COUNT(*) AS subVerification FROM AbonnementPanier WHERE id_panier = :id_panier AND id_utilisateur = :id_utilisateur";
         $stmt = $this->pdo->prepare($request);
-        foreach ($params as $param => $value) {
-            $stmt->bindParam(":" . $param, $value, PDO::PARAM_STR);
-        }
+        $stmt->bindParam(':id_panier', $id_panier, PDO::PARAM_INT);
+        $stmt->bindParam(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $bool = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $bool["subVerification"] === 1 ? true : false;
     }
 
-    // public function insert($data)
-    // {
-    //     $request = "INSERT INTO AbonnementPanier (id_panier, id_utilisateur, dateDebut, dateFin) VALUES (:id_panier, :id_utilisateur, :dateDebut, :dateFin)";
-    //     $stmt = $this->pdo->prepare($request);
-    //     $stmt->bindParam(':id_panier', $data->id_panier, PDO::PARAM_STR);
-    //     $stmt->bindParam(':id_utilisateur', $data->id_utilisateur, PDO::PARAM_STR);
-    //     $stmt->bindParam(":dateDebut" , $data->dateDebut, PDO::PARAM_STR);
-    //     $stmt->bindParam(":dateFin" , $data->dateFin, PDO::PARAM_STR);
-    //     return $stmt->execute([$data->id_panier, $data->id_utilisateur, $data->dateDebut, $data->dateFin]);
-    // }
+    public function insert($data)
+    {
+        $date = date('Y-m-d H:i:s');
+        $id_panier = intval($data->id_panier);
+        $request = "INSERT INTO AbonnementPanier (id_panier, id_utilisateur, date_debut) VALUES (:id_panier, :id_utilisateur, :date_debut)";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(':id_panier', $id_panier, PDO::PARAM_INT);
+        $stmt->bindParam(':id_utilisateur', $data->id_utilisateur, PDO::PARAM_INT);
+        $stmt->bindParam(":date_debut", $date, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
 }

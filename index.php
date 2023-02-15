@@ -139,11 +139,11 @@ if (isset($_GET["action"])) {
         case 'subscription':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
-                    (new SubscriptionCartController)->get();
+                    (new SubscriptionCartController)->getSubVerification();
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    // (new SubscriptionCartController)->insert($data);
+                    (new SubscriptionCartController)->insert($data);
                     break;
             }
             break;
