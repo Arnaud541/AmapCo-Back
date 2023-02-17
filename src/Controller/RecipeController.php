@@ -107,6 +107,17 @@ class RecipeController
         echo json_encode($response);
     }
 
+    public function deleteRecipeById($data)
+    {
+        $success = (new RecipeModel)->deleteRecipeById($data);
+        if ($success) {
+            $response = ['status' => 200, 'success' => $success, 'message' => 'La suppression à bien été effectuée'];
+        } else {
+            $response = ['status' => 400, 'success' => $success, 'message' => 'La suppression à échoué'];
+        }
+        echo json_encode($response);
+    }
+
     public function insert($data)
     {
         if ((new RecipeModel)->insert($data)) {
