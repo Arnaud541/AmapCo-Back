@@ -240,7 +240,8 @@ class RecipeModel
         JOIN PanierProducteur ON Produit.id_panier = PanierProducteur.id
         WHERE PanierProducteur.id = :id
         GROUP BY Recette.id
-        ORDER BY nb_ingredients_communs DESC;";
+        ORDER BY nb_ingredients_communs DESC
+        LIMIT 5;";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(':id', $cart, PDO::PARAM_STR);
         $stmt->execute();
