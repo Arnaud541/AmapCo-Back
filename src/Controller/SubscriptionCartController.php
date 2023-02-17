@@ -27,4 +27,11 @@ class SubscriptionCartController
         }
         echo json_encode($response);
     }
+
+    public function subscribedCart($id)
+    {
+        $data = (new SubscriptionCartModel)->subscribedCart($id);
+        $response = ['status' => 200, 'subscribedCart' => $data];
+        echo json_encode($response);
+    }
 }

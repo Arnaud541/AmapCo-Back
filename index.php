@@ -279,6 +279,13 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'subscribedCart':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new SubscriptionCartController)->subscribedCart($_GET["id"]);
+                    break;
+            }
+            break;
 
 
             // case 'growerByIdProducerCart':

@@ -36,4 +36,18 @@ class SubscriptionCartModel
         $stmt->bindParam(":date_debut", $date, PDO::PARAM_STR);
         return $stmt->execute();
     }
+
+    public function subscribedCart($id)
+    {
+        $request = "SELECT PanierProducteur.id_producteur, PanierProducteur.nom, PanierProducteur.img_url,Producteur.nom,Producteur.prenom
+        FROM PanierProducteur
+        INNER JOIN Producteur ON PanierProducteur.id_producteur = Producteur.id
+        INNER JOIN AbonnementPanier ON PanierProducteur.id = AbonnementPanier.id_panier
+        INNER JOIN Utilisateur ON AbonnementPanier.id_utilisateur = Utilisateur.id
+        WHERE Utilisateur.id = :utilisateur ;";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(':utilisateur', $id, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
