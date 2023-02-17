@@ -118,8 +118,8 @@ class RecipeModel
                 }
                 $t2 = implode(" AND ", $filtres);
                 $request .= $t2;
-                $request .= " AND";
-                $request .= " CONCAT(Recette.titre,Recette.description) LIKE '%" . $_GET["search"]["search"] . "%'";
+                $request .= count($_GET["search"]["filters"]) > 2 ? " AND " : null;
+                $request .= "CONCAT(Recette.titre,Recette.description) LIKE '%" . $_GET["search"]["search"] . "%'";
             } else {
                 $request .= "WHERE ";
                 $filtres = [];
@@ -136,6 +136,7 @@ class RecipeModel
         } else {
             $request .= " WHERE CONCAT(Recette.titre,Recette.description) LIKE '%" . $_GET["search"]["search"] . "%'";
         }
+
         $stmt = $this->pdo->prepare($request);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -237,7 +238,7 @@ class RecipeModel
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(':id', $recipe, PDO::PARAM_STR);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);   
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getSimilarRecipeCart($cart)
@@ -253,6 +254,6 @@ class RecipeModel
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(':id', $cart, PDO::PARAM_STR);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

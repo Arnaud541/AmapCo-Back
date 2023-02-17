@@ -104,6 +104,7 @@ class RecipeController
     {
         $recipes = (new RecipeModel)->getSimilarRecipeCart($cart);
         $response = ['status' => 200, 'recettes' => $recipes];
+        echo json_encode($response);
     }
 
     public function deleteRecipeById($data)
