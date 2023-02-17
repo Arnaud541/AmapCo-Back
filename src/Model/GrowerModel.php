@@ -3,6 +3,7 @@
 namespace AMAP\Model;
 
 use PDO;
+use DateTime;
 use AMAP\Database\DbConnect;
 
 class GrowerModel
@@ -58,6 +59,15 @@ class GrowerModel
         $stmt->bindParam(":id", $idgrowerCart, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteGrowerCart($data)
+    {
+        $id_panier = intval($data->id_panier);
+        $request = "DELETE FROM PanierProducteur WHERE id = :id";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(":id", $id_panier, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 
     public function getGrowerReview($idgrowerReview)

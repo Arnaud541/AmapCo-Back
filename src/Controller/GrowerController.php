@@ -34,11 +34,23 @@ class GrowerController
         }
     }
 
+    public function deleteGrowerCart($data)
+    {
+
+        $success = (new GrowerModel)->deleteGrowerCart($data);
+        if ($success) {
+            $response = ['status' => 200, 'success' => $success, 'message' => 'La suppression à bien été effectuée'];
+        } else {
+            $response = ['status' => 400, 'success' => $success, 'message' => 'La suppression à échoué'];
+        }
+        echo json_encode($response);
+    }
+
     public function getGrowerReview($idgrowerReview)
     {
-            $data = (new GrowerModel)->getGrowerReview($idgrowerReview);
-            $response = ['status' => 200, 'reviews' => $data];
-            echo json_encode($response);
+        $data = (new GrowerModel)->getGrowerReview($idgrowerReview);
+        $response = ['status' => 200, 'reviews' => $data];
+        echo json_encode($response);
     }
 
     public function insert($data)
