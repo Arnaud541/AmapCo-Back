@@ -256,6 +256,10 @@ if (isset($_GET["action"])) {
                 case 'GET':
                     (new GrowerController)->getGrowerCart();
                     break;
+                case 'DELETE':
+                    $data = json_decode(file_get_contents("php://input"));
+                    (new GrowerController)->deleteGrowerCart($data);
+                    break;
             }
             break;
         case 'growerreview':

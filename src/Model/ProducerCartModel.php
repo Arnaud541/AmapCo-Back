@@ -57,20 +57,41 @@ class ProducerCartModel
 
     public function getBySearch()
     {
-        $request = "SELECT PanierProducteur.nom FROM PanierProducteur JOIN Produit ON PanierProducteur.id = Produit.id_panier JOIN Ingredient ON Produit.id_ingredient = Ingredient.id INNER JOIN Producteur ON PanierProducteur.id_producteur = Producteur.id WHERE CONCAT(Ingredient.nom, Producteur.nom, Producteur.prenom, PanierProducteur.nom, PanierProducteur.type) LIKE '%" . $_GET["search"]["search"] . "%'" . "GROUP BY PanierProducteur.id";
+
+        $request = "SELECT PanierProducteur.id, PanierProducteur.nom, PanierProducteur.img_url, PanierProducteur.type FROM PanierProducteur
+        INNER JOIN Produit ON PanierProducteur.id = Produit.id_panier
+        INNER JOIN Ingredient ON Produit.id_ingredient = Ingredient.id 
+        INNER JOIN Producteur ON PanierProducteur.id_producteur = Producteur.id";
+
         if (!empty($_GET["search"]["filters"])) {
-            $request .= " AND ";
-            $filtres = [];
-            foreach ($_GET["search"]["filters"] as $key => $values) {
-                foreach ($values as $value) {
-                    $t = $key . " = " . "'" . $value . "'";
-                    array_push($filtres, $t);
+            if (!empty($_GET["search"]["filters"]["ingredient"])) {
+                $request .= " WHERE ";
+
+                $filtre_ingredients = [];
+                foreach ($_GET["search"]["filters"]["ingredient"] as $value) {
+                    $f_ingredient = "Ingredient.nom" . " = " . "'$value'";
+                    array_push($filtre_ingredients, $f_ingredient);
                 }
+
+                $f_ingredient2 = implode(" OR ", $filtre_ingredients);
+                $request .= $f_ingredient2;
+                $request .= !empty($_GET["search"]["filters"]["type"]) ? "AND" : null;
             }
-            $t2 = implode(" OR ", $filtres);
-            $request .= $t2;
+            if (!empty($_GET["search"]["filters"]["type"])) {
+                $type = $_GET["search"]["filters"]["type"][0];
+                $request .= " WHERE ";
+                $f_type = "PanierProducteur.type" . " = " . "'$type'";
+                $request .= $f_type;
+                $request .= !empty($_GET["search"]["filters"]["ingredient"]) ? "AND" : null;
+            }
+            if (!empty($_GET["search"]["search"])) {
+                $request .= " WHERE CONCAT(Producteur.nom, Producteur.prenom, PanierProducteur.nom) LIKE '%" . $_GET["search"]["search"] . "%'";
+            }
+        } else {
+            $request .= " WHERE CONCAT(Producteur.nom, Producteur.prenom, PanierProducteur.nom) LIKE '%" . $_GET["search"]["search"] . "%'";
         }
-        $stmt = $this->pdo->query($request);
+        $stmt = $this->pdo->prepare($request);
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
