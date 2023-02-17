@@ -91,11 +91,11 @@ class RecipeModel
 
     public function getBySearch()
     {
-        $request = "SELECT Recette.id, Recette.titre FROM Recette";
+        $request = "SELECT Recette.id, Recette.titre FROM Recette ";
         if (!empty($_GET["search"]["filters"])) {
 
             if (!empty($_GET["search"]["filters"]["ingredient"])) {
-                $request .= " INNER JOIN Contenir ON Contenir.id_recette = Recette.id INNER JOIN Ingredient ON Contenir.id_ingredient = Ingredient.id WHERE ";
+                $request .= "INNER JOIN Contenir ON Contenir.id_recette = Recette.id INNER JOIN Ingredient ON Contenir.id_ingredient = Ingredient.id WHERE ";
                 $filtre_ingredients = [];
                 foreach ($_GET["search"]["filters"]["ingredient"] as $value) {
                     $f_ingredient = "Ingredient.nom" . " = " . "'$value'";
@@ -118,9 +118,10 @@ class RecipeModel
                 }
                 $t2 = implode(" AND ", $filtres);
                 $request .= $t2;
-                $request .= "AND CONCAT(Recette.titre,Recette.description) LIKE '%" . $_GET["search"]["search"] . "%'";
+                $request .= " AND";
+                $request .= " CONCAT(Recette.titre,Recette.description) LIKE '%" . $_GET["search"]["search"] . "%'";
             } else {
-                $request .= " AND ";
+                $request .= "WHERE ";
                 $filtres = [];
                 foreach ($_GET["search"]["filters"] as $key => $values) {
                     foreach ($values as $value) {
@@ -130,12 +131,11 @@ class RecipeModel
                 }
                 $t2 = implode(" AND ", $filtres);
                 $request .= $t2;
-                $request .= "AND CONCAT(Recette.titre,Recette.description) LIKE '%" . $_GET["search"]["search"] . "%'";
+                $request .= " AND CONCAT(Recette.titre,Recette.description) LIKE '%" . $_GET["search"]["search"] . "%'";
             }
         } else {
-            $request .= "WHERE CONCAT(Recette.titre,Recette.description) LIKE '%" . $_GET["search"]["search"] . "%'";
+            $request .= " WHERE CONCAT(Recette.titre,Recette.description) LIKE '%" . $_GET["search"]["search"] . "%'";
         }
-
         $stmt = $this->pdo->prepare($request);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
