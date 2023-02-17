@@ -93,6 +93,13 @@ class RecipeController
         // echo json_encode($response);
     }
 
+    public function getSimilarRecipe($recipe)
+    {
+        $recipes = (new RecipeModel)->getSimilarRecipe($recipe);
+        $response = ['status' => 200, 'recettes' => $recipes];
+        echo json_encode($response);
+    }
+
     public function insert($data)
     {
         if ((new RecipeModel)->insert($data)) {

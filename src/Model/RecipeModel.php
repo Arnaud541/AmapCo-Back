@@ -213,4 +213,21 @@ class RecipeModel
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getSimilarRecipe($recipe)
+    {
+        $request = "SELECT Recette2.id, Recette2.titre, COUNT(DISTINCT Contenir.id_ingredient) AS nb_ingredients_communs
+        FROM Recette
+        JOIN Contenir ON Recette.id = Contenir.id_recette
+        JOIN Contenir AS Contenir2 ON Contenir.id_ingredient = Contenir2.id_ingredient AND Contenir.id_recette <> Contenir2.id_recette
+        JOIN Recette AS Recette2 ON Contenir2.id_recette = Recette2.id
+        WHERE Recette.id = :id AND Recette.id <> Recette2.id
+        GROUP BY Recette.id, Recette2.id
+        ORDER BY nb_ingredients_communs DESC
+        LIMIT 5;";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(':id', $recipe, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);   
+    }
 }

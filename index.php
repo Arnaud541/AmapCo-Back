@@ -290,6 +290,13 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'getSimilarRecipe':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new RecipeController)->getSimilarRecipe($_GET["recipe"]);
+                    break;
+            }
+            break;
 
 
             // case 'growerByIdProducerCart':
