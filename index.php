@@ -71,6 +71,10 @@ if (isset($_GET["action"])) {
                 case 'GET':
                     (new RecipeController)->getById();
                     break;
+                case 'DELETE':
+                    $data = json_decode(file_get_contents("php://input"));
+                    (new RecipeController)->deleteRecipeById($data);
+                    break;
             }
             break;
         case 'recipeSearch':

@@ -143,7 +143,7 @@ class RecipeModel
 
     public function getById($id)
     {
-        $request = "SELECT Recette.titre, Recette.photo, Recette.dureeRealisation, Recette.saison, Recette.difficulte, Recette.typePlat, Recette.regimeAlimentaire 
+        $request = "SELECT Recette.id_utilisateur, Recette.titre, Recette.photo, Recette.dureeRealisation, Recette.saison, Recette.difficulte, Recette.typePlat, Recette.regimeAlimentaire 
         FROM Recette 
         WHERE Recette.id = :id";
         $stmt = $this->pdo->prepare($request);
@@ -151,6 +151,15 @@ class RecipeModel
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteRecipeById($data)
+    {
+        $id_recette = intval($data->id_recette);
+        $request = "DELETE FROM Recette WHERE id = :id";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(":id", $id_recette, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 
 
