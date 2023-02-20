@@ -36,6 +36,10 @@ if (isset($_GET["action"])) {
                     $data = json_decode(file_get_contents("php://input"));
                     (new RecipeController)->insert($data);
                     break;
+                case 'PUT':
+                    $data = json_decode(file_get_contents("php://input"));
+                    (new RecipeController)->insert($data);
+                    break;
             }
             break;
         case 'allIngredients':
@@ -56,13 +60,6 @@ if (isset($_GET["action"])) {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
                     (new RecipeController)->getRecipesByIdUser();
-                    break;
-            }
-            break;
-        case 'associatedRecipes':
-            switch ($_SERVER["REQUEST_METHOD"]) {
-                case 'GET':
-                    (new RecipeController)->getAssociatedRecipes();
                     break;
             }
             break;
@@ -284,6 +281,10 @@ if (isset($_GET["action"])) {
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
                     (new ProducerCartController)->getCart($_GET["idcart"]);
+                    break;
+                case 'POST':
+                    $data = json_decode(file_get_contents("php://input"));
+                    (new ProducerCartController)->insert($data);
                     break;
             }
             break;

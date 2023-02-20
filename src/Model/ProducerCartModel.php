@@ -107,14 +107,36 @@ class ProducerCartModel
 
     public function insert($data)
     {
-        $request = "INSERT INTO PanierProducteur (id_produit,id_producteur,nom,img_url,prix,type) VALUES (:id_produit,:id_producteur,:nom,:img_url,:prix,:type)";
-        $stmt = $this->pdo->prepare($request);
-        $stmt->bindParam(':id_produit', $data->id_produit, PDO::PARAM_INT);
-        $stmt->bindParam(':id_producteur', $data->id_producteur, PDO::PARAM_INT);
-        $stmt->bindParam(":nom", $data->nom, PDO::PARAM_STR);
-        $stmt->bindParam(":img_url", $data->img_url, PDO::PARAM_STR);
-        $stmt->bindParam(":prix", $data->prix, PDO::PARAM_STR);
-        $stmt->bindParam(":type", $data->type, PDO::PARAM_STR);
-        return $stmt->execute([$data->id_produit, $data->id_producteur, $data->nom, $data->img_url, $data->prix, $data->type]);
+        if (!empty($data->cart->ingredients)) {
+            $date_creation = strtotime($data->cart->created_at);
+            $date_creation = date('Y-m-d h:i:s', $date_creation);
+
+            $date_fin = strtotime($data->cart->end_at);
+            $date_fin = date('Y-m-d h:i:s', $date_fin);
+
+            $request = "INSERT INTO PanierProducteur (id_producteur,nom,description,type,created_at,end_at) VALUES (:id_producteur,:nom,:description,:type,:created_at,:end_at)";
+            $stmt = $this->pdo->prepare($request);
+            $stmt->bindParam(':id_producteur', $data->cart->id_producteur, PDO::PARAM_INT);
+            $stmt->bindParam(":nom", $data->cart->nom, PDO::PARAM_STR);
+            $stmt->bindParam(":description", $data->cart->description, PDO::PARAM_STR);
+            $stmt->bindParam(":type", $data->cart->type, PDO::PARAM_STR);
+            $stmt->bindParam(":created_at", $date_creation, PDO::PARAM_STR);
+            $stmt->bindParam(":end_at", $date_fin, PDO::PARAM_STR);
+            $stmt->execute();
+            $id_panier = $this->pdo->lastInsertId();
+
+            foreach ($data->cart->ingredients as $i) {
+                $request2 = "INSERT INTO Produit (id_panier, id_ingredient, quantite) VALUES (:id_panier, :id_ingredient, :quantite)";
+                $stmt2 = $this->pdo->prepare($request2);
+                $stmt2->bindParam('id_panier', $id_panier, PDO::PARAM_INT);
+                $stmt2->bindParam(':id_ingredient', $i->ingredient, PDO::PARAM_INT);
+                $stmt2->bindParam(':quantite', $i->quantite, PDO::PARAM_INT);
+                $stmt2->execute();
+            }
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }

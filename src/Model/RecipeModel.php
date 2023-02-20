@@ -68,6 +68,52 @@ class RecipeModel
         return true;
     }
 
+    public function update($data)
+    {
+        $temps = intval($data->recipe->temps);
+
+        $request = "UPDATE Recette SET titre = :titre ,description = :description, dureeRealisation=:dureeRealisation ,saison = :saison ,difficulte = :difficulte ,typePlat = :typePlat ,regimeAlimentaire = :regimeAlimentaire WHERE id = :id";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(":id", $data->recipe->id_recette, PDO::PARAM_INT);
+        $stmt->bindParam(":titre", $data->recipe->nom, PDO::PARAM_STR);
+        $stmt->bindParam(":description", $data->recipe->description, PDO::PARAM_STR);
+        $stmt->bindParam(":dureeRealisation", $temps, PDO::PARAM_INT);
+        $stmt->bindParam(":saison", $data->recipe->saison, PDO::PARAM_STR);
+        $stmt->bindParam(":difficulte", $data->recipe->difficulte, PDO::PARAM_STR);
+        $stmt->bindParam(":typePlat", $data->recipe->typePlat, PDO::PARAM_STR);
+        $stmt->bindParam(":regimeAlimentaire", $data->recipe->regime, PDO::PARAM_STR);
+        $stmt->execute();
+
+        foreach ($data->recipe->ustensiles as $u) {
+            $request2 = "UPDATE Utiliser SET id_ustensile = :id_ustensile WHERE id_recette = :id_recette";
+            $stmt2 = $this->pdo->prepare($request2);
+            $stmt2->bindParam(':id_recette', $data->recipe->id_recette, PDO::PARAM_INT);
+            $stmt2->bindParam(':id_ustensile', $u, PDO::PARAM_INT);
+            $stmt2->execute();
+        }
+
+        foreach ($data->recipe->etapes as $e) {
+            $request3 = "UPDATE Etape SET numero = :numero, contenu = :contenu WHERE id_recette = :id_recette";
+            $stmt3 = $this->pdo->prepare($request3);
+            $stmt3->bindParam('id_recette', $data->recipe->id_recette, PDO::PARAM_INT);
+            $stmt3->bindParam(':numero', $e->etape, PDO::PARAM_INT);
+            $stmt3->bindParam(':contenu', $e->description, PDO::PARAM_STR);
+            $stmt3->execute();
+        }
+
+        foreach ($data->recipe->ingredients as $i) {
+            $request4 = "UPDATE Contenir SET id_ingredient = :id_ingredient, quantite = :quantite, unite = :unite WHERE id_recette = :id_recette";
+            $stmt4 = $this->pdo->prepare($request4);
+            $stmt4->bindParam('id_recette', $data->recipe->id_recette, PDO::PARAM_INT);
+            $stmt4->bindParam(':id_ingredient', $i->ingredient, PDO::PARAM_INT);
+            $stmt4->bindParam(':quantite', $i->quantite, PDO::PARAM_INT);
+            $stmt4->bindParam(':unite', $i->unite, PDO::PARAM_STR);
+            $stmt4->execute();
+        }
+
+        return true;
+    }
+
     public function getAssociatedRecipes()
     {
         $request2 = "SELECT Ingredient.nom AS IngredientNom FROM Ingredient INNER JOIN Produit ON Produit.id_ingredient = Ingredient.id WHERE Produit.id_panier = 8";
@@ -226,7 +272,7 @@ class RecipeModel
 
     public function getSimilarRecipe($recipe)
     {
-        $request = "SELECT Recette2.id, Recette2.titre, COUNT(DISTINCT Contenir.id_ingredient) AS nb_ingredients_communs
+        $request = "SELECT Recette2.id, Recette2.titre, Recette2.photo, COUNT(DISTINCT Contenir.id_ingredient) AS nb_ingredients_communs
         FROM Recette
         JOIN Contenir ON Recette.id = Contenir.id_recette
         JOIN Contenir AS Contenir2 ON Contenir.id_ingredient = Contenir2.id_ingredient AND Contenir.id_recette <> Contenir2.id_recette

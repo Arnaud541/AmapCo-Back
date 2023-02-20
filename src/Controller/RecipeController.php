@@ -86,13 +86,6 @@ class RecipeController
         }
     }
 
-    public function getAssociatedRecipes()
-    {
-        $recipes = (new RecipeModel)->getAssociatedRecipes();
-        // $response = ['status' => 200, 'recipes' => $recipes];
-        // echo json_encode($response);
-    }
-
     public function getSimilarRecipe($recipe)
     {
         $recipes = (new RecipeModel)->getSimilarRecipe($recipe);
@@ -124,6 +117,16 @@ class RecipeController
             $response = ['status' => 200, 'message' => "La recette a bien été enregistrée"];
         } else {
             $response = ['status' => 400, 'message' => "L'enregistrement de la recette a échouée"];
+        }
+        echo json_encode($response);
+    }
+
+    public function update($data)
+    {
+        if ((new RecipeModel)->update($data)) {
+            $response = ['status' => 200, 'message' => "La recette a bien été modifié"];
+        } else {
+            $response = ['status' => 400, 'message' => "La modification de la recette a échouée"];
         }
         echo json_encode($response);
     }
