@@ -58,7 +58,7 @@ class ProducerCartModel
     public function getBySearch()
     {
 
-        $request = "SELECT PanierProducteur.id, PanierProducteur.nom, PanierProducteur.img_url, PanierProducteur.type FROM PanierProducteur
+        $request = "SELECT PanierProducteur.id, PanierProducteur.nom, PanierProducteur.img_url, PanierProducteur.type, PanierProducteur.id_producteur FROM PanierProducteur
         INNER JOIN Produit ON PanierProducteur.id = Produit.id_panier
         INNER JOIN Ingredient ON Produit.id_ingredient = Ingredient.id 
         INNER JOIN Producteur ON PanierProducteur.id_producteur = Producteur.id";
@@ -95,15 +95,7 @@ class ProducerCartModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getCartBySearch($ingredient)
-    {
-        $request = "SELECT Produit.id_panier,PanierProducteur.nom,PanierProducteur.img_url FROM PanierProducteur INNER JOIN Produit ON PanierProducteur.id = Produit.id_panier INNER JOIN Ingredient ON Produit.id_ingredient = Ingredient.id WHERE Ingredient.nom LIKE :ingredient ;";
-        $ingredient = "$ingredient%";
-        $stmt = $this->pdo->prepare($request);
-        $stmt->bindParam(':ingredient', $ingredient, PDO::PARAM_STR);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+
 
     public function insert($data)
     {

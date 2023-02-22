@@ -130,4 +130,38 @@ class RecipeController
         }
         echo json_encode($response);
     }
+
+    public function getFavorite()
+    {
+        if (isset($_GET["id_recipe"]) && isset($_GET["id_user"])) {
+            $data = (new RecipeModel)->getFavorite($_GET["id_recipe"], $_GET["id_user"]);
+            $response = ['status' => 200, 'favorite' => $data];
+            echo json_encode($response);
+        }
+    }
+
+    public function deleteFavorite($data)
+    {
+
+        $data = (new RecipeModel)->deleteFavorite($data);
+        if ($data) {
+            $response = ['status' => 200, 'message' => "La recette a été enlevé de vos favoris."];
+        } else {
+            $response = ['status' => 400, 'message' => "La recette est toujours en favoris."];
+        }
+
+        echo json_encode($response);
+    }
+
+    public function insertFavorite($data)
+    {
+        $data = (new RecipeModel)->insertFavorite($data);
+        if ($data) {
+            $response = ['status' => 200, 'message' => "La recette a été ajouté à vos favoris."];
+        } else {
+            $response = ['status' => 400, 'message' => "L'ajout de la recette à vos favoris a échoué."];
+        }
+
+        echo json_encode($response);
+    }
 }

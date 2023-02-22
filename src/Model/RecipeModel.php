@@ -303,4 +303,33 @@ class RecipeModel
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getFavorite($id_recipe, $id_user)
+    {
+        $request = "SELECT COUNT(*) AS favoriteVerification FROM FavorisRecette WHERE id_utilisateur = :id_utilisateur AND id_recette = :id_recette";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(':id_utilisateur', $id_user, PDO::PARAM_INT);
+        $stmt->bindParam(':id_recette', $id_recipe, PDO::PARAM_INT);
+        $stmt->execute();
+        $bool = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $bool["favoriteVerification"] === 1 ? true : false;
+    }
+
+    public function deleteFavorite($data)
+    {
+        $request = "DELETE FROM FavorisRecette WHERE id_utilisateur = :id_utilisateur AND id_recette = :id_recette";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(':id_utilisateur', $data->id_utilisateur, PDO::PARAM_INT);
+        $stmt->bindParam(':id_recette', $data->id_recette, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function insertFavorite($data)
+    {
+        $request = "INSERT INTO FavorisRecette (id_utilisateur,id_recette) VALUES (:id_utilisateur,:id_recette)";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(':id_utilisateur', $data->id_utilisateur, PDO::PARAM_INT);
+        $stmt->bindParam(':id_recette', $data->id_recette, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }

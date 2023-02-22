@@ -137,6 +137,21 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'favorite':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new RecipeController)->getFavorite();
+                    break;
+                case 'DELETE':
+                    $data = json_decode(file_get_contents("php://input"));
+                    (new RecipeController)->deleteFavorite($data);
+                    break;
+                case 'POST':
+                    $data = json_decode(file_get_contents("php://input"));
+                    (new RecipeController)->insertFavorite($data);
+                    break;
+            }
+            break;
         case 'subscription':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
@@ -309,29 +324,6 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
-
-
-            // case 'growerByIdProducerCart':
-            //     switch ($_SERVER["REQUEST_METHOD"]) {
-            //         case 'GET':
-            //             (new GrowerController)->getByIdProducerCart($_GET["id_producteur"]);
-            //             break;
-            //     }
-            //     break;
-            // case 'growerNoteById':
-            //     switch ($_SERVER["REQUEST_METHOD"]) {
-            //         case 'GET':
-            //             (new GrowerNoteController)->getNote($_GET["id_producteur"]);
-            //             break;
-            //     }
-            //     break;
-            // case 'growerByIdProducerCart':
-            //     switch ($_SERVER["REQUEST_METHOD"]) {
-            //         case 'GET':
-            //             (new GrowerController)->getByIdProducerCart($_GET["id_producteur"]);
-            //             break;
-            //     }
-            //     break;
     }
 } else {
     $response = ['status' => 200, 'message' => 'Erreur d\'accès à l\'API'];

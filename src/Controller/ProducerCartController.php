@@ -31,17 +31,12 @@ class ProducerCartController
         echo json_encode($response);
     }
 
-    public function getCartBySearch($ingredient)
-    {
-        $data = (new ProducerCartModel)->getCartBySearch($ingredient);
-        $response = ['status' => 200, 'cart' => $data];
-        echo json_encode($response);
-    }
+
 
     public function insert($data)
     {
         if ((new ProducerCartModel)->insert($data)) {
-            $response = ['status' => 200, 'message' => "Le panier a bien été enregistrée"];
+            $response = ['status' => 200, 'message' => "Le panier a bien été enregistré"];
         } else {
             $response = ['status' => 400, 'message' => "L'enregistrement du panier a échoué"];
         }
