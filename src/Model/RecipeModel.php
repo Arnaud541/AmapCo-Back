@@ -315,6 +315,17 @@ class RecipeModel
         return $bool["favoriteVerification"] === 1 ? true : false;
     }
 
+    public function getRecipeFavoriteByUser($id_user)
+    {
+        $request = "SELECT Recette.id, Recette.titre, Recette.photo FROM Recette 
+        INNER JOIN FavorisRecette ON Recette.id = FavorisRecette.id_recette
+        WHERE Favoris.id_utilisateur = :id_utilisateur";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(':id_utilisateur', $id_user, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function deleteFavorite($data)
     {
         $request = "DELETE FROM FavorisRecette WHERE id_utilisateur = :id_utilisateur AND id_recette = :id_recette";

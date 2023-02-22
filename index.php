@@ -137,6 +137,13 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'recipeFavorite':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new RecipeController)->getRecipeFavoriteByUser();
+                    break;
+            }
+            break;
         case 'favorite':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':

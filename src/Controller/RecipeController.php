@@ -140,6 +140,15 @@ class RecipeController
         }
     }
 
+    public function getRecipeFavoriteByUser()
+    {
+        if (isset($_GET["id_user"])) {
+            $data = (new RecipeModel)->getRecipeFavoriteByUser($_GET["id_user"]);
+            $response = ['status' => 200, 'recipes' => $data];
+            echo json_encode($response);
+        }
+    }
+
     public function deleteFavorite($data)
     {
 
