@@ -177,7 +177,7 @@ if (isset($_GET["action"])) {
                     break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
-                    (new CommentsController)->insert($data);
+                    (new RecipeController)->insertComment($data);
                     break;
             }
             break;

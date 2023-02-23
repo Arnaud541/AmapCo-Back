@@ -34,6 +34,16 @@ class RecipeController
         }
     }
 
+    public function insertComment($data)
+    {
+        if ((new RecipeModel)->insertComment($data)) {
+            $response = ['status' => 200, 'message' => "Le commentaire a bien été enregistré"];
+        } else {
+            $response = ['status' => 400, 'message' => "L'enregistrement du commentaire a échoué"];
+        }
+        echo json_encode($response);
+    }
+
     public function getUstensils()
     {
         if (isset($_GET["id"])) {

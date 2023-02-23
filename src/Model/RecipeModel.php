@@ -224,6 +224,16 @@ class RecipeModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function insertComment($data)
+    {
+        $request = "INSERT INTO Commentaire (id_utilisateur, id_recette, contenu, created_at) VALUES (:id_utilisateur, id_recette, :contenu, NOW())";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(':id_utilisateur', $data->comment->id_utilisateur, PDO::PARAM_INT);
+        $stmt->bindParam(':id_recette', $data->comment->id_recette, PDO::PARAM_INT);
+        $stmt->bindParam(':contenu', $data->comment->contenu, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
 
     public function getUstensils($idRecipe)
     {
