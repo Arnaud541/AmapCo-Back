@@ -86,10 +86,6 @@ if (isset($_GET["action"])) {
                 case 'GET':
                     (new UserController)->get();
                     break;
-                case 'POST':
-                    $data = json_decode(file_get_contents("php://input"));
-                    (new UserController)->insert($data);
-                    break;
             }
             break;
         case 'userById':

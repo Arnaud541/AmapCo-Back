@@ -42,22 +42,26 @@ class AuthenticationModel
 
     public function insert($data)
     {
-        $email = $data->user->email;
-        $stmt = $this->pdo->prepare("SELECT * FROM Utilisateur WHERE email=?");
-        $stmt->execute([$email]);
+        $insert = false;
+        $stmt = $this->pdo->prepare("SELECT * FROM Utilisateur WHERE email=:email");
+        $stmt->bindParam(':email', $data->user->email, PDO::PARAM_STR);
+        $stmt->execute();
         $user = $stmt->fetch();
         if ($user) {
-            return false;
+            $insert = false;
         } else {
-            $request = "INSERT INTO Utilisateur (email, nom, prenom, avatar, password) VALUES (:email, :nom, :prenom, :avatar, :password)";
-            $stmt = $this->pdo->prepare($request);
-            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-            $stmt->bindParam(':nom', $data->user->lastName, PDO::PARAM_STR);
-            $stmt->bindParam(":prenom", $data->user->firstName, PDO::PARAM_STR);
-            $stmt->bindParam(":avatar", $data->user->profilePicture, PDO::PARAM_STR);
-            $stmt->bindParam(":password", $data->user->password, PDO::PARAM_STR);
-            $stmt->execute();
-            return true;
+            if (!$user && $data->user->password === $data->user->confirmPassword) {
+                $password = md5($data->user->password);
+                $request = "INSERT INTO Utilisateur (email, nom, prenom, description, password) VALUES (:email, :nom, :prenom, :description, :password)";
+                $stmt = $this->pdo->prepare($request);
+                $stmt->bindParam(':email', $data->user->email, PDO::PARAM_STR);
+                $stmt->bindParam(':nom', $data->user->lastname, PDO::PARAM_STR);
+                $stmt->bindParam(":prenom", $data->user->firstname, PDO::PARAM_STR);
+                $stmt->bindParam(":description", $data->user->description, PDO::PARAM_STR);
+                $stmt->bindParam(":password", $password, PDO::PARAM_STR);
+                $insert = $stmt->execute();
+            }
         }
+        return $insert;
     }
 }
