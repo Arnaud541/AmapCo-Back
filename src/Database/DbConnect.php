@@ -6,7 +6,7 @@ use PDO;
 
 class DbConnect
 {
-    private $host = "https://auth-db966.hstgr.io/";
+    private $host = "sql966.main-hosting.eu";
     private $dbname = "u560558504_amap";
     private $user = "u560558504_amap";
     private $password = "8Um05T&tdB";
