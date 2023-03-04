@@ -286,6 +286,10 @@ if (isset($_GET["action"])) {
                 case 'GET':
                     (new GrowerController)->getGrowerReview($_GET["id"]);
                     break;
+                case 'POST':
+                    $data = json_decode(file_get_contents("php://input"));
+                    (new GrowerController)->insertGrowerReview($data);
+                    break;
             }
             break;
         case 'CartSearch':

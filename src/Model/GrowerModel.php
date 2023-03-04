@@ -102,24 +102,13 @@ class GrowerModel
         }
     }
 
-    // public function login()
-    // {
-    //     $email = $_GET['email'];
-    //     $password = $_GET['password'];
-    //     $stmt = $this->pdo->prepare("SELECT * FROM Producteur WHERE email=? AND password=?");
-    //     $stmt->execute([$email,$password]); 
-    //     $user = $stmt->fetch();
-    //     if (!$user) {
-    //         return false;
-    //     }
-    //     else{
-    //         return true;
-    //     }
-    //     $stmt->bindParam(":prenom", $data->prenom, PDO::PARAM_STR);
-    //     $stmt->bindParam(":avatar", $data->avatar, PDO::PARAM_STR);
-    //     $stmt->bindParam(":region", $data->region, PDO::PARAM_STR);
-    //     $stmt->bindParam(":adresse", $data->adresse, PDO::PARAM_STR);
-    //     $stmt->bindParam(":codePostal", $data->codePostal, PDO::PARAM_STR);
-    //     return $stmt->execute([$data->email, $data->nom, $data->prenom, $data->avatar, $data->region, $data->adresse, $data->codePostal]);
-    // }
+    public function insertGrowerReview($data)
+    {
+        $request = "INSERT INTO NoteProducteur (id_utilisateur, id_producteur, avis, created_at) VALUES (:id_utilisateur, id_producteur, :avis, NOW())";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(':id_utilisateur', $data->opinion->id_utilisateur, PDO::PARAM_INT);
+        $stmt->bindParam(':id_producteur', $data->comment->id_producteur, PDO::PARAM_INT);
+        $stmt->bindParam(':avis', $data->comment->avis, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
 }

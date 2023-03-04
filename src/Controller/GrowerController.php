@@ -62,14 +62,14 @@ class GrowerController
         }
         echo json_encode($response);
     }
-    // public function login()
-    // {
-    //     if ((new GrowerModel)->login()) {
-    //         $response = ['status' => 200, 'message' => "Connexion réussie"];
-    //     } 
-    //     else {
-    //         $response = ['status' => 400, 'message' => "Connexion échouée"];
-    //     }
-    //     echo json_encode($response);
-    // }
+
+    public function insertGrowerReview($data)
+    {
+        if ((new GrowerModel)->insertGrowerReview($data)) {
+            $response = ['status' => 200, 'message' => "Votre avis a été ajouté"];
+        } else {
+            $response = ['status' => 400, 'message' => "L'enregistrement de l'avis a échoué"];
+        }
+        echo json_encode($response);
+    }
 }

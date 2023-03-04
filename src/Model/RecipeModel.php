@@ -329,7 +329,7 @@ class RecipeModel
     {
         $request = "SELECT Recette.id, Recette.titre, Recette.photo FROM Recette 
         INNER JOIN FavorisRecette ON Recette.id = FavorisRecette.id_recette
-        WHERE Favoris.id_utilisateur = :id_utilisateur";
+        WHERE FavorisRecette.id_utilisateur = :id_utilisateur";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(':id_utilisateur', $id_user, PDO::PARAM_INT);
         $stmt->execute();
