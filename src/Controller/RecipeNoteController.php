@@ -26,6 +26,16 @@ class RecipeNoteController
         echo json_encode($response);
     }
 
+    public function updateNote($data)
+    {
+        if ((new RecipeNoteModel)->updateNote($data)) {
+            $response = ['status' => 200, 'message' => "La note a bien été modifiée"];
+        } else {
+            $response = ['status' => 400, 'message' => "L'enregistrement de la note a échoué"];
+        }
+        echo json_encode($response);
+    }
+
     public function getUserNoteByIdRecipe()
     {
         if (isset($_GET["id_recette"]) && isset($_GET["id_utilisateur"])) {

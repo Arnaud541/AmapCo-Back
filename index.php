@@ -193,6 +193,10 @@ if (isset($_GET["action"])) {
                 case 'GET':
                     (new RecipeController)->getNote();
                     break;
+                case 'PUT':
+                    $data = json_decode(file_get_contents("php://input"));
+                    (new RecipeNoteController)->updateNote($data);
+                    break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
                     (new RecipeNoteController)->insert($data);

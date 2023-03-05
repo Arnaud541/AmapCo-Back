@@ -51,6 +51,16 @@ class RecipeNoteModel
         return $stmt->execute();
     }
 
+    public function updateNote($data)
+    {
+        $request = "UPDATE NoteRecette SET note = :note WHERE id_utilisateur = :id_utilisateur AND id_recette = :id_recette";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(':id_utilisateur', $data->id_utilisateur, PDO::PARAM_INT);
+        $stmt->bindParam(':id_recette', $data->id_recette, PDO::PARAM_INT);
+        $stmt->bindParam(":note", $data->note, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
     public function getUserNoteByIdRecipe($idRecipe, $idUser)
     {
         $request = "SELECT note FROM NoteRecette WHERE id_recette = :id_recette AND id_utilisateur = :id_utilisateur";
