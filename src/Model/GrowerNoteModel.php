@@ -52,6 +52,7 @@ class GrowerNoteModel
 
     public function getUserNoteByIdGrower($idGrower, $idUser)
     {
+        var_dump($idUser);
         $request = "SELECT note FROM NoteProducteur WHERE id_producteur = :id_producteur AND id_utilisateur = :id_utilisateur";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(':id_producteur', $idGrower, PDO::PARAM_INT);
@@ -63,6 +64,16 @@ class GrowerNoteModel
     public function insert($data)
     {
         $request = "INSERT INTO NoteProducteur (id_utilisateur, id_producteur, note) VALUES (:id_utilisateur,:id_producteur,:note)";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(':id_utilisateur', $data->id_utilisateur, PDO::PARAM_INT);
+        $stmt->bindParam(':id_producteur', $data->id_producteur, PDO::PARAM_INT);
+        $stmt->bindParam(":note", $data->note, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function updateNote($data)
+    {
+        $request = "UPDATE NoteProducteur SET note = :note WHERE id_utilisateur = :id_utilisateur AND id_producteur = :id_producteur";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(':id_utilisateur', $data->id_utilisateur, PDO::PARAM_INT);
         $stmt->bindParam(':id_producteur', $data->id_producteur, PDO::PARAM_INT);

@@ -204,6 +204,10 @@ if (isset($_GET["action"])) {
                 case 'GET':
                     (new GrowerController)->getGrowerNote();
                     break;
+                case 'PUT':
+                    $data = json_decode(file_get_contents("php://input"));
+                    (new GrowerNoteController)->updateNote($data);
+                    break;
                 case 'POST':
                     $data = json_decode(file_get_contents("php://input"));
                     (new GrowerNoteController)->insert($data);
