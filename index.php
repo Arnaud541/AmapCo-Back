@@ -204,12 +204,23 @@ if (isset($_GET["action"])) {
                 case 'GET':
                     (new GrowerController)->getGrowerNote();
                     break;
+                case 'POST':
+                    $data = json_decode(file_get_contents("php://input"));
+                    (new GrowerNoteController)->insert($data);
+                    break;
             }
             break;
         case 'getUserNoteByIdRecipe':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
                     (new RecipeNoteController)->getUserNoteByIdRecipe();
+                    break;
+            }
+            break;
+        case 'getUserNoteByIdGrower':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new GrowerNoteController)->getUserNoteByIdGrower();
                     break;
             }
             break;

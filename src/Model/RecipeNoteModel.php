@@ -56,7 +56,7 @@ class RecipeNoteModel
         $request = "SELECT note FROM NoteRecette WHERE id_recette = :id_recette AND id_utilisateur = :id_utilisateur";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(':id_recette', $idRecipe, PDO::PARAM_INT);
-        $stmt->bindParam('id_utilisateur', $idUser, PDO::PARAM_INT);
+        $stmt->bindParam(':id_utilisateur', $idUser, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

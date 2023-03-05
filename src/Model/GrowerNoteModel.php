@@ -45,18 +45,28 @@ class GrowerNoteModel
     {
         $request = "select nom,prenom,id from Utilisateur inner join NoteProducteur on Utilisateur.id = NoteProducteur.id_utilisateur where NoteProducteur.id_producteur = :id_producteur;";
         $stmt = $this->pdo->prepare($request);
-        $stmt->bindParam(":id_producteur",$id_producteur,PDO::PARAM_INT);
+        $stmt->bindParam(":id_producteur", $id_producteur, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getUserNoteByIdGrower($idGrower, $idUser)
+    {
+        $request = "SELECT note FROM NoteProducteur WHERE id_producteur = :id_producteur AND id_utilisateur = :id_utilisateur";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam(':id_producteur', $idGrower, PDO::PARAM_INT);
+        $stmt->bindParam(':id_utilisateur', $idUser, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function insert($data)
     {
-        $request = "INSERT INTO NoteProducteur (id_utilisateur, note, avis) VALUES (:id_utilisateur,:note,:avis)";
+        $request = "INSERT INTO NoteProducteur (id_utilisateur, id_producteur, note) VALUES (:id_utilisateur,:id_producteur,:note)";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(':id_utilisateur', $data->id_utilisateur, PDO::PARAM_INT);
-        $stmt->bindParam(':note', $data->note, PDO::PARAM_STR);
-        $stmt->bindParam(":avis" , $data->avis, PDO::PARAM_STR);
-        return $stmt->execute([$data->id_utilisateur, $data->note, $data->avis]);
+        $stmt->bindParam(':id_producteur', $data->id_producteur, PDO::PARAM_INT);
+        $stmt->bindParam(":note", $data->note, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 }

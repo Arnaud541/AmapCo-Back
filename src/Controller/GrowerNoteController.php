@@ -16,21 +16,24 @@ class GrowerNoteController
         echo json_encode($response);
     }
 
-    public function getNote($id_producteur)
-    {
-        $data = (new GrowerNoteModel)->getNote($id_producteur);
-        $response = ['status' => 200, 'growerNote' => $data];
-        echo json_encode($response);
-    }
-
     public function insert($data)
     {
         if ((new GrowerNoteModel)->insert($data)) {
             $response = ['status' => 200, 'message' => "La note a bien été enregistrée"];
-        } 
-        else {
+        } else {
             $response = ['status' => 400, 'message' => "L'enregistrement de la note a échoué"];
         }
         echo json_encode($response);
+    }
+
+    public function getUserNoteByIdGrower()
+    {
+        if (isset($_GET["id_producteur"]) && isset($_GET["id_utilisateur"])) {
+            $data = (new GrowerNoteModel)->getUserNoteByIdGrower($_GET["id_producteur"], $_GET["id_utilisateur"]);
+            if ($data && !is_null($data)) {
+                $response = ['status' => 200, 'note' => $data];
+                echo json_encode($response);
+            }
+        }
     }
 }
