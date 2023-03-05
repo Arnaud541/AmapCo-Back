@@ -72,4 +72,13 @@ class GrowerController
         }
         echo json_encode($response);
     }
+
+    public function getGrowerNote()
+    {
+        if (isset($_GET["id"])) {
+            $data = (new GrowerModel)->getGrowerNote($_GET["id"]);
+            $response = ['status' => 200, 'note' => $data];
+            echo json_encode($response);
+        }
+    }
 }

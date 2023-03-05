@@ -111,4 +111,13 @@ class GrowerModel
         $stmt->bindParam(':avis', $data->comment->avis, PDO::PARAM_STR);
         return $stmt->execute();
     }
+
+    public function getGrowerNote($idGrower)
+    {
+        $request = "SELECT AVG(note) AS note FROM NoteProducteur WHERE id_producteur = :id";
+        $stmt = $this->pdo->prepare($request);
+        $stmt->bindParam('id', $idGrower, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

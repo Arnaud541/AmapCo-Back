@@ -210,6 +210,13 @@ if (isset($_GET["action"])) {
                     break;
             }
             break;
+        case 'growerNote':
+            switch ($_SERVER["REQUEST_METHOD"]) {
+                case 'GET':
+                    (new GrowerController)->getGrowerNote();
+                    break;
+            }
+            break;
         case 'getUserNoteByIdRecipe':
             switch ($_SERVER["REQUEST_METHOD"]) {
                 case 'GET':
