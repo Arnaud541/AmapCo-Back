@@ -3,6 +3,7 @@
 namespace AMAP\Model;
 
 use PDO;
+use DateTime;
 use AMAP\Database\DbConnect;
 
 class ProducerCartModel
@@ -16,29 +17,33 @@ class ProducerCartModel
 
     public function getAll()
     {
-        $params = [];
-        if (isset($_GET['params'])) {
-            foreach ($_GET['params'] as $param => $value) {
-                $params[$param] = $value;
-            }
-        }
-        $request = "SELECT * FROM PanierProducteur";
-        $firstLoop = false;
-        foreach ($params as $param => $value) {
-            if ($firstLoop == true) {
-                $request = $request . " AND ";
-            } else {
-                $request = $request . " WHERE ";
-            }
-            $request = $request . $param . " = :" . $param;
-            $firstLoop = true;
-        }
+
+        $request = "SELECT * FROM PanierProducteur WHERE YEARWEEK(PanierProducteur.created_at, 1) = YEARWEEK(NOW(), 1)";
         $stmt = $this->pdo->prepare($request);
-        foreach ($params as $param => $value) {
-            $stmt->bindParam(":" . $param, $value, PDO::PARAM_STR);
-        }
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $date_actuelle = new DateTime();
+        $date_fin_semaine = new DateTime('next sunday 23:59:00');
+        foreach ($data as $key => $cart) {
+            $creationDate = new DateTime($cart["created_at"]);
+
+            // calcul de la différence en secondes entre l'heure actuelle et la date de fin de la semaine
+            $diff_secondes = $date_fin_semaine->getTimestamp() - $date_actuelle->getTimestamp();
+
+            // calcul de la différence en secondes entre la date de création et la date de fin de la semaine
+            $diff_cre_fin = $date_fin_semaine->getTimestamp() - $creationDate->getTimestamp();
+
+            // calcul du nombre d'heures restantes entre la date de création et la fin de la semaine
+            if ($diff_cre_fin > 0) {
+                $diff_heures = floor($diff_secondes / 3600); // conversion des secondes en heures arrondies à l'entier inférieur
+                $diff_minutes = floor(($diff_secondes % 3600) / 60); // conversion des secondes restantes en minutes arrondies à l'entier inférieur
+                $diff_secondes = $diff_secondes % 60; // reste des secondes
+                $data[$key]["heures_restantes"] = sprintf('%02dh%02dm%02ds', $diff_heures, $diff_minutes, $diff_secondes);
+            }
+        }
+
+        return $data;
     }
 
     public function getCart($idCart)
@@ -58,7 +63,7 @@ class ProducerCartModel
     public function getBySearch()
     {
 
-        $request = "SELECT PanierProducteur.id, PanierProducteur.nom, PanierProducteur.img_url, PanierProducteur.type, PanierProducteur.id_producteur FROM PanierProducteur";
+        $request = "SELECT PanierProducteur.id, PanierProducteur.nom, PanierProducteur.img_url, PanierProducteur.type, PanierProducteur.id_producteur, PanierProducteur.created_at AS date_debut, PanierProducteur.end_at FROM PanierProducteur";
         $request .= !empty($_GET["search"]["filters"]["ingredient"]) || !empty($_GET["search"]["search"]) ? " INNER JOIN Produit ON PanierProducteur.id = Produit.id_panier
         INNER JOIN Ingredient ON Produit.id_ingredient = Ingredient.id 
         INNER JOIN Producteur ON PanierProducteur.id_producteur = Producteur.id" : null;
@@ -92,9 +97,33 @@ class ProducerCartModel
         } else {
             $request .= " WHERE CONCAT(Producteur.nom, Producteur.prenom, PanierProducteur.nom) LIKE '%" . $_GET["search"]["search"] . "%'";
         }
+
+        $request .= " AND YEARWEEK(PanierProducteur.created_at, 1) = YEARWEEK(NOW(), 1)";
         $stmt = $this->pdo->prepare($request);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $date_actuelle = new DateTime();
+        $date_fin_semaine = new DateTime('next sunday 23:59:00');
+        foreach ($data as $key => $cart) {
+            $creationDate = new DateTime($cart["date_debut"]);
+
+            // calcul de la différence en secondes entre l'heure actuelle et la date de fin de la semaine
+            $diff_secondes = $date_fin_semaine->getTimestamp() - $date_actuelle->getTimestamp();
+
+            // calcul de la différence en secondes entre la date de création et la date de fin de la semaine
+            $diff_cre_fin = $date_fin_semaine->getTimestamp() - $creationDate->getTimestamp();
+
+            // calcul du nombre d'heures restantes entre la date de création et la fin de la semaine
+            if ($diff_cre_fin > 0) {
+                $diff_heures = floor($diff_secondes / 3600); // conversion des secondes en heures arrondies à l'entier inférieur
+                $diff_minutes = floor(($diff_secondes % 3600) / 60); // conversion des secondes restantes en minutes arrondies à l'entier inférieur
+                $diff_secondes = $diff_secondes % 60; // reste des secondes
+                $data[$key]["heures_restantes"] = sprintf('%02dh%02dm%02ds', $diff_heures, $diff_minutes, $diff_secondes);
+            }
+        }
+
+        return $data;
     }
 
 
