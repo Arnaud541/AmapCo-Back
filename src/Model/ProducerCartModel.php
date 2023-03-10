@@ -134,17 +134,14 @@ class ProducerCartModel
             $date_creation = strtotime($data->cart->created_at);
             $date_creation = date('Y-m-d h:i:s', $date_creation);
 
-            $date_fin = strtotime($data->cart->end_at);
-            $date_fin = date('Y-m-d h:i:s', $date_fin);
-
-            $request = "INSERT INTO PanierProducteur (id_producteur,nom,description,type,created_at,end_at) VALUES (:id_producteur,:nom,:description,:type,:created_at,:end_at)";
+            $request = "INSERT INTO PanierProducteur (id_producteur,nom,description,type,created_at,img_url) VALUES (:id_producteur,:nom,:description,:type,:created_at,:img_url)";
             $stmt = $this->pdo->prepare($request);
             $stmt->bindParam(':id_producteur', $data->cart->id_producteur, PDO::PARAM_INT);
             $stmt->bindParam(":nom", $data->cart->nom, PDO::PARAM_STR);
             $stmt->bindParam(":description", $data->cart->description, PDO::PARAM_STR);
             $stmt->bindParam(":type", $data->cart->type, PDO::PARAM_STR);
             $stmt->bindParam(":created_at", $date_creation, PDO::PARAM_STR);
-            $stmt->bindParam(":end_at", $date_fin, PDO::PARAM_STR);
+            $stmt->bindParam(":img_url", $data->cart->image, PDO::PARAM_STR);
             $stmt->execute();
             $id_panier = $this->pdo->lastInsertId();
 

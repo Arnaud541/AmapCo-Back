@@ -114,27 +114,6 @@ class RecipeModel
         return true;
     }
 
-    public function getAssociatedRecipes()
-    {
-        $request2 = "SELECT Ingredient.nom AS IngredientNom FROM Ingredient INNER JOIN Produit ON Produit.id_ingredient = Ingredient.id WHERE Produit.id_panier = 8";
-        $stmt = $this->pdo->prepare($request2);
-        $stmt->execute();
-        $ingredients = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $request = "SELECT Recette.id FROM Recette 
-        INNER JOIN Contenir ON Contenir.id_recette = Recette.id 
-        INNER JOIN Ingredient ON Contenir.id_ingredient = Ingredient.id 
-        WHERE";
-        $array = [];
-        foreach ($ingredients as $i) {
-            $ing_field = "Ingredient.nom" . " = " . $i["IngredientNom"];
-            array_push($array, $ing_field);
-        }
-
-        foreach ($array as $element) {
-        }
-    }
-
     public function getBySearch()
     {
         $request = "SELECT Recette.id, Recette.titre FROM Recette ";
