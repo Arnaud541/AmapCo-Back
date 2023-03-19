@@ -28,17 +28,17 @@ class ProducerCartModel
         foreach ($data as $key => $cart) {
             $creationDate = new DateTime($cart["created_at"]);
 
-            // calcul de la différence en secondes entre l'heure actuelle et la date de fin de la semaine
+
             $diff_secondes = $date_fin_semaine->getTimestamp() - $date_actuelle->getTimestamp();
 
-            // calcul de la différence en secondes entre la date de création et la date de fin de la semaine
+
             $diff_cre_fin = $date_fin_semaine->getTimestamp() - $creationDate->getTimestamp();
 
-            // calcul du nombre d'heures restantes entre la date de création et la fin de la semaine
+
             if ($diff_cre_fin > 0) {
-                $diff_heures = floor($diff_secondes / 3600); // conversion des secondes en heures arrondies à l'entier inférieur
-                $diff_minutes = floor(($diff_secondes % 3600) / 60); // conversion des secondes restantes en minutes arrondies à l'entier inférieur
-                $diff_secondes = $diff_secondes % 60; // reste des secondes
+                $diff_heures = floor($diff_secondes / 3600);
+                $diff_minutes = floor(($diff_secondes % 3600) / 60);
+                $diff_secondes = $diff_secondes % 60;
                 $data[$key]["heures_restantes"] = sprintf('%02dh%02dm%02ds', $diff_heures, $diff_minutes, $diff_secondes);
             }
         }

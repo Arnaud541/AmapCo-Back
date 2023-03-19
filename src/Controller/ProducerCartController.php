@@ -33,7 +33,6 @@ class ProducerCartController
     }
 
 
-
     public function insert($data)
     {
         if ((new ProducerCartModel)->insert($data)) {

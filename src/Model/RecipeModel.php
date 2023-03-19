@@ -278,15 +278,14 @@ class RecipeModel
 
     public function getSimilarRecipeCart($cart)
     {
-        $request = "SELECT Recette.id, Recette.titre, Recette.photo, COUNT(DISTINCT Contenir.id_ingredient) AS nb_ingredients_communs
-        FROM Recette
-        JOIN Contenir ON Recette.id = Contenir.id_recette
-        JOIN Produit ON Contenir.id_ingredient = Produit.id
-        JOIN PanierProducteur ON Produit.id_panier = PanierProducteur.id
-        WHERE PanierProducteur.id = :id
-        GROUP BY Recette.id
-        ORDER BY nb_ingredients_communs DESC
-        LIMIT 6;";
+        $request = "SELECT Recette.id,Recette.titre,Recette.photo, COUNT(*) AS nb_ingredients_en_commun FROM Recette 
+        INNER JOIN Contenir ON Recette.id = Contenir.id_recette 
+        INNER JOIN Ingredient ON Contenir.id_ingredient = Ingredient.id 
+        INNER JOIN Produit ON Ingredient.id = Produit.id_ingredient 
+        WHERE Produit.id_panier = :id 
+        GROUP BY Recette.id 
+        ORDER BY nb_ingredients_en_commun DESC 
+        LIMIT 5";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(':id', $cart, PDO::PARAM_STR);
         $stmt->execute();
