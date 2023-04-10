@@ -205,7 +205,7 @@ class RecipeModel
 
     public function insertComment($data)
     {
-        $request = "INSERT INTO Commentaire (id_utilisateur, id_recette, contenu, created_at) VALUES (:id_utilisateur, id_recette, :contenu, NOW())";
+        $request = "INSERT INTO Commentaire (id_utilisateur, id_recette, contenu) VALUES (:id_utilisateur, :id_recette, :contenu)";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(':id_utilisateur', $data->comment->id_utilisateur, PDO::PARAM_INT);
         $stmt->bindParam(':id_recette', $data->comment->id_recette, PDO::PARAM_INT);
