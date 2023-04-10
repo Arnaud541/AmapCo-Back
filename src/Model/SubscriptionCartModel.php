@@ -39,7 +39,7 @@ class SubscriptionCartModel
 
     public function subscribedCart($id)
     {
-        $request = "SELECT PanierProducteur.id_producteur, PanierProducteur.nom, PanierProducteur.img_url, CONCAT(Producteur.nom, ' ', Producteur.prenom)
+        $request = "SELECT PanierProducteur.id_producteur, PanierProducteur.id AS id_panier, PanierProducteur.nom, PanierProducteur.img_url, CONCAT(Producteur.nom, ' ', Producteur.prenom)
         AS Nom
         FROM PanierProducteur
         INNER JOIN Producteur ON PanierProducteur.id_producteur = Producteur.id

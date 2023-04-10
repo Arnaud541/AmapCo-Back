@@ -54,11 +54,34 @@ class GrowerModel
 
     public function getGrowerCart($idgrowerCart)
     {
-        $request = "SELECT * FROM PanierProducteur WHERE id_producteur=:id ";
+        $request = "SELECT * FROM PanierProducteur WHERE id_producteur=:id AND YEARWEEK(PanierProducteur.created_at, 1) = YEARWEEK(NOW(), 1)";
         $stmt = $this->pdo->prepare($request);
         $stmt->bindParam(":id", $idgrowerCart, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $date_actuelle = new DateTime();
+        $date_fin_semaine = new DateTime('next sunday 23:59:00');
+        foreach ($data as $key => $cart) {
+            $creationDate = new DateTime($cart["created_at"]);
+
+
+            $diff_secondes = $date_fin_semaine->getTimestamp() - $date_actuelle->getTimestamp();
+
+
+            $diff_cre_fin = $date_fin_semaine->getTimestamp() - $creationDate->getTimestamp();
+
+
+            if ($diff_cre_fin > 0) {
+                $diff_heures = floor($diff_secondes / 3600);
+                $diff_minutes = floor(($diff_secondes % 3600) / 60);
+                $diff_secondes = $diff_secondes % 60;
+                $data[$key]["heures_restantes"] = sprintf('%02dh%02dm%02ds', $diff_heures, $diff_minutes, $diff_secondes);
+            }
+        }
+
+        return $data;
     }
 
     public function deleteGrowerCart($data)
