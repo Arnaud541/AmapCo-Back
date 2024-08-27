@@ -6,10 +6,10 @@ use PDO;
 
 class DbConnect
 {
-    private $host = "sql966.main-hosting.eu";
-    private $dbname = "u560558504_amap";
-    private $user = "u560558504_amap";
-    private $password = "8Um05T&tdB";
+    private $host = "amapcov821.mysql.db";
+    private $dbname = "amapcov821";
+    private $user = "amapcov821";
+    private $password = "Amapco2k24";
 
     public function connect()
     {
